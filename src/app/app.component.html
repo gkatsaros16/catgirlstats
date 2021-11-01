@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row" style="margin-top: 25px;">
     <div *ngIf="selectedCatgirl" class="d-flex justify-content-center">
       <div *ngIf="selectedCatgirl.src">
         <img [src]="selectedCatgirl.src" class="img-fluid" class="catgirl">
@@ -19,12 +19,12 @@
     <div class="col-sm-3" *ngFor="let catgirl of CATGIRLS | sort:'desc' : 'rank'">
       <div class="card clickable" [ngClass]="getBorderHover(catgirl)" (click)="selectCatgirl(catgirl)" style="margin-bottom: 10px;">
         <div class="card-body">
-          <h5 class="card-title">{{catgirl.name}}</h5>
+          <h4 class="card-title">{{catgirl.name}}</h4>
           <h6>
             <span class="badge rounded-pill bg-primary">S{{getSeason(catgirl)}} - {{getType(catgirl)}}</span> 
             <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span> 
           </h6>
-          <h4 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h4>
+          <h5 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h5>
         </div>
       </div>
     </div>

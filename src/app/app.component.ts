@@ -90,7 +90,7 @@ export class AppComponent {
   selectedCatgirl = {};
   sub: Subscription
   constructor(private apollo: Apollo) {
-    
+
   }
 
   ngOnInit() {

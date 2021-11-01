@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+.epic {
+    background-color: purple
+}
+
+.legendary {
+    background-color: gold
+}
+
+.pawsome {
+    background-color: hotpink
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.catgirl {
+    max-height: 300px; 
+    max-width: 300px; 
+    min-height: 300px;
+}
+
+.common-border:hover {
+    box-shadow: 0 4px 5px 0 grey, 0 1px 10px 0 grey, 0 2px 4px -1px grey;
+}
+.rare-border:hover {
+    box-shadow: 0 4px 5px 0 lightblue, 0 1px 10px 0 lightblue, 0 2px 4px -1px lightblue;
+}
+.epic-border:hover {
+    box-shadow: 0 4px 5px 0 plum, 0 1px 10px 0 plum, 0 2px 4px -1px plum;
+}
+.legendary-border:hover {
+    box-shadow: 0 4px 5px 0 rgb(247, 226, 110), 0 1px 10px 0 rgb(247, 226, 110), 0 2px 4px -1px rgb(247, 226, 110);
+}
+.pawsome-border:hover {
+    box-shadow: 0 4px 5px 0 pink, 0 1px 10px 0 pink, 0 2px 4px -1px pink;
+}
+    

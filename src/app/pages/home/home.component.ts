@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, timer } from 'rxjs';
+import { nftadeContextService } from 'src/app/services/nftrade-context.service';
 import { CatgirlContextService } from '../../services/catgirl-context.service'
 
 let GET_COUNT = gql`
@@ -24,10 +25,12 @@ export class HomeComponent {
   total = 0;
   selectedCatgirl = {};
   sub: Subscription
+  sub2: Subscription
   CATGIRLS
   constructor(
     private apollo: Apollo,
-    private context: CatgirlContextService
+    private context: CatgirlContextService,
+    private nfTradeContext: nftadeContextService
     ) {
     this.CATGIRLS = this.context.CATGIRLS;
   }
@@ -35,7 +38,16 @@ export class HomeComponent {
   ngOnInit() {
     this.initCatgirls();
     this.selectedCatgirl = this.CATGIRLS.find(x => x.id == "4:0");
-    this.sub = interval(5000).subscribe(() => this.getCatgirls());;
+    this.sub = interval(5000).subscribe(() => this.getCatgirls());
+    this.sub2 = timer(1000).subscribe(() => this.getNFTTadeStats());
+  }
+
+  getNFTTadeStats() {
+    this.CATGIRLS.forEach(catgirl => {
+      catgirl.recentListing = this.nfTradeContext.getRecentNFTListing(catgirl.id);  
+      catgirl.recentSold = this.nfTradeContext.getRecentNFTSold(catgirl.id);  
+      catgirl.averagePrice = this.nfTradeContext.getRecentAveragePrice(catgirl.id);
+    })
   }
 
   getCatgirls() {
@@ -146,5 +158,6 @@ export class HomeComponent {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.sub2.unsubscribe();
   }
 }

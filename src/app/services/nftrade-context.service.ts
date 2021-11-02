@@ -36,11 +36,8 @@ export class nftadeContextService {
     ) { 
         this.getRecentListings();
         this.getRecentSold();
-        this.getSoldHighest();
     }
 
-    // organize through nft trade to get catgirl details then sort into detail view
-    // maybe best to create api server that sends requests and updates every 5 minutes instead of page browse.
     getRecentListings() {     
         this.http.get("https://api.nftrade.com/api/v1/tokens?limit=100&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
@@ -112,10 +109,49 @@ export class nftadeContextService {
         })
     }
 
-    getSoldHighest() {
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=100&skip=0&search=catgirl&order=&verified=&sort=last_sell_desc").subscribe((x:any[]) => {
-            // this.recentListings$.next(x)
-            // console.log(x);
-        })
+    getRecentNFTListing(id:any) {
+        if (!this.recentListings$.value) {
+            this.getRecentListings();
+        }
+        var recent = this.recentListings$.value;
+        if (recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
+            return recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+        } else {
+            return null;
+        }
+    }
+
+    getRecentNFTSold(id:any) {
+        if (!this.recentSold$.value) {
+            this.getRecentSold();
+        }
+        var recentSold = this.recentSold$.value;
+        if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
+            var sorted = recentSold.sort((a,b) => (a.last_sell_at < b.last_sell_at) ? 1 : -1);
+            return sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+        } else {
+            return null
+        }
+    }
+
+    getRecentAveragePrice(id:any) {
+        var totalPrice = 0;
+        if ((this.recentSold$.value.length == 0)) {
+            this.getRecentSold();
+        }
+        var recentSold = this.recentSold$.value;
+        if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
+            var recentAveragePriceArray = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+            recentAveragePriceArray.forEach(trans => {
+            totalPrice += parseFloat(trans.last_sell);
+            });
+
+            return {
+                total: totalPrice,
+                count: recentAveragePriceArray.length
+            };
+        } else {
+            return null;
+        }
     }
 }

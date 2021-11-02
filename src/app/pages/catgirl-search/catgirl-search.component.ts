@@ -44,11 +44,10 @@ export class CatgirlSearchComponent {
   CATGIRLS;
   total = 0;
   error;
-  analytics
   recentNFTListing;
   recentNFTSold;
-  highestNFTSold;
-  recentSold;
+  recentAveragePrice;
+
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
@@ -73,24 +72,16 @@ export class CatgirlSearchComponent {
     });
   }
 
-  check() {
-    this.getRecentNFTListing()
-  }
-
   getRecentNFTListing() {
-    var recent = this.nfTradeContext.recentListings$.value;
-    this.recentNFTListing = recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
+    this.recentNFTListing = this.nfTradeContext.getRecentNFTListing(this.catgirl.id);
   }
 
   getRecentNFTSold() {
-    this.recentSold = this.nfTradeContext.recentSold$.value;
-    var sorted = this.recentSold.sort((a,b) => (a.last_sell_at < b.last_sell_at) ? 1 : -1);
-    this.recentNFTSold = sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
+    this.recentNFTSold = this.nfTradeContext.getRecentNFTSold(this.catgirl.id);
   }
 
-  getHighestNFTSold() {
-    var highestSold = this.nfTradeContext.soldHighest$.value;
-    this.highestNFTSold = highestSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
+  getRecentAveragePrice() {
+    this.recentAveragePrice = this.nfTradeContext.getRecentAveragePrice(this.catgirl.id);
   }
 
   getCatgirl() {
@@ -120,7 +111,8 @@ export class CatgirlSearchComponent {
             this.catgirl.nyaScore = result.data.catgirls[0].nyaScore;
             this.getRecentNFTListing();
             this.getRecentNFTSold();
-            // this.getHighestNFTSold();
+            this.getRecentAveragePrice();
+
             this.error = "";
           } else {
             this.catgirl = null;

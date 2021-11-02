@@ -2,14 +2,15 @@
     <div class="col-sm-6">
         <label for="exampleFormControlInput1" class="form-label">Catgirl Number</label>
         <form class="row g-3">
-            <div class="col-sm-9">
+            <div class="col-sm-10">
                 <label for="inputPassword2" class="visually-hidden">Catgirl Number</label>
                 <input [(ngModel)]="catgirlNumber" name="catgirlNumber" type="number" class="form-control" placeholder="Ex: 69420">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <button (click)="getCatgirl()" class="btn btn-primary mb-3">Search</button>
             </div>
         </form>
+        <div *ngIf="error" class="text text-danger d-flex justify-content-center">{{ error }}</div>
     </div>
 </div>
 <div *ngIf="catgirl" class="row">

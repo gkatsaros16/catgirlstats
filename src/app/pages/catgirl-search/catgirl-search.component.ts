@@ -42,6 +42,8 @@ export class CatgirlSearchComponent {
   catgirl;
   CATGIRLS;
   total = 0;
+  error;
+  analytics
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService
@@ -87,8 +89,15 @@ export class CatgirlSearchComponent {
           }
         })
         .valueChanges.subscribe((result: any) => {
-          this.catgirl = this.CATGIRLS.find(x => x.id == `${result.data.catgirls[0].rarity}:${result.data.catgirls[0].characterId}`);
-          this.catgirl.nyaScore = result.data.catgirls[0].nyaScore;
+          if (result.data.catgirls[0]) {
+            this.catgirl = this.CATGIRLS.find(x => x.id == `${result.data.catgirls[0].rarity}:${result.data.catgirls[0].characterId}`);
+            this.catgirl.nyaScore = result.data.catgirls[0].nyaScore;
+            this.error = "";
+          } else {
+            this.catgirl = null;
+            this.error = "No catgirls found with that number nya~"
+          }
+
       });
   }
 

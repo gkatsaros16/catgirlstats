@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { CatgirlContextService } from 'src/app/services/catgirl-context.service';
+import { nftadeContextService } from 'src/app/services/nftrade-context.service';
 
 let GET_CATGIRL = gql`
         query GetCatgirls($first: Int, $skip: Int = 0, $orderBy: String, $orderDirection: String = asc, $where: Catgirl_filter) {
@@ -44,9 +45,14 @@ export class CatgirlSearchComponent {
   total = 0;
   error;
   analytics
+  recentNFTListing;
+  recentNFTSold;
+  highestNFTSold;
+  recentSold;
   constructor(
     private apollo: Apollo,
-    private context: CatgirlContextService
+    private context: CatgirlContextService,
+    private nfTradeContext: nftadeContextService
   ) {
     this.CATGIRLS = this.context.CATGIRLS;
   }
@@ -65,6 +71,26 @@ export class CatgirlSearchComponent {
             this.total += result?.data?.characterCount?.total;
       });
     });
+  }
+
+  check() {
+    this.getRecentNFTListing()
+  }
+
+  getRecentNFTListing() {
+    var recent = this.nfTradeContext.recentListings$.value;
+    this.recentNFTListing = recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
+  }
+
+  getRecentNFTSold() {
+    this.recentSold = this.nfTradeContext.recentSold$.value;
+    var sorted = this.recentSold.sort((a,b) => (a.last_sell_at < b.last_sell_at) ? 1 : -1);
+    this.recentNFTSold = sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
+  }
+
+  getHighestNFTSold() {
+    var highestSold = this.nfTradeContext.soldHighest$.value;
+    this.highestNFTSold = highestSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == this.catgirl.id);
   }
 
   getCatgirl() {
@@ -92,12 +118,14 @@ export class CatgirlSearchComponent {
           if (result.data.catgirls[0]) {
             this.catgirl = this.CATGIRLS.find(x => x.id == `${result.data.catgirls[0].rarity}:${result.data.catgirls[0].characterId}`);
             this.catgirl.nyaScore = result.data.catgirls[0].nyaScore;
+            this.getRecentNFTListing();
+            this.getRecentNFTSold();
+            // this.getHighestNFTSold();
             this.error = "";
           } else {
             this.catgirl = null;
             this.error = "No catgirls found with that number nya~"
           }
-
       });
   }
 

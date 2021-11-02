@@ -24,7 +24,6 @@ import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.co
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,
-
   ],
   providers: [SortPipe],
   bootstrap: [AppComponent]

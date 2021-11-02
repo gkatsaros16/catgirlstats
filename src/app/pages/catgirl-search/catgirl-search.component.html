@@ -13,6 +13,7 @@
         <div *ngIf="error" class="text text-danger d-flex justify-content-center">{{ error }}</div>
     </div>
 </div>
+
 <div *ngIf="catgirl" class="row">
     <div class="col-sm-6 d-flex justify-content-center">
         <img [src]="catgirl.src" class="img-fluid" class="catgirl-big">
@@ -22,5 +23,41 @@
         <h4>Nya Score: {{ catgirl.nyaScore }}</h4>
         <hr>
         <h4>Owned: {{catgirl.total | number }}/{{total | number}} ({{catgirl.total / total | percent:'.3'}})</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card mb-1" style="width: 100%;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2">Recent Listing <span class="text-muted float-end">Listed: {{ recentNFTListing.listedAt | date:'short'}}</span></h6>
+                        <div class="row">
+                            <div class="col-sm-6">Price: {{ recentNFTListing.price }} BNB</div>
+                            <div class="col-sm-6">Nya Score: {{ recentNFTListing.catgirlDetails.nyaScore }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card mb-1" style="width: 100%;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2">Recent Sold <span class="text-muted float-end">Sold: {{ recentNFTSold.last_sell_at | date:'short'}}</span></h6>
+                        <div class="row">
+                            <div class="col-sm-6">Price: {{ recentNFTSold.last_sell }} BNB</div>
+                            <div class="col-sm-6">Nya Score: {{ recentNFTSold.catgirlDetails.nyaScore }}</div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <div class="card mb-1" style="width: 100%;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2">Average Sale</h6>
+                            <div class="row">
+                                <div class="text-muted">Comming Soon nya~</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

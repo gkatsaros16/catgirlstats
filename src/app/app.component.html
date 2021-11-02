@@ -1,34 +1,24 @@
 <div class="container">
-  <div class="row" style="margin-top: 25px;">
-    <div *ngIf="selectedCatgirl" class="d-flex justify-content-center">
-      <div *ngIf="selectedCatgirl.src">
-        <img [src]="selectedCatgirl.src" class="img-fluid" class="catgirl">
-      </div>
-      <!-- <video playsinline autoplay loop muted *ngIf="selectedCatgirl.id == '4:0'" class="catgirl">
-        <source [src]="selectedCatgirl.mp4" type="video/mp4" />
-      </video>
-      <video playsinline autoplay loop muted *ngIf="selectedCatgirl.id == '3:0'" class="catgirl">
-        <source [src]="selectedCatgirl.mp4" type="video/mp4" />
-      </video> -->
-    </div>
-  </div>
-  <div class="row">
-    <h2><span class="d-flex justify-content-center">TOTAL CATGIRLS: {{ total | number }}</span></h2>
-  </div>
-  <div class="row">
-    <div class="col-sm-3" *ngFor="let catgirl of CATGIRLS | sort:'desc' : 'rank'">
-      <div class="card clickable" [ngClass]="getBorderHover(catgirl)" (click)="selectCatgirl(catgirl)" style="margin-bottom: 10px;">
-        <div class="card-body">
-          <h4 class="card-title">{{catgirl.name}}</h4>
-          <h6>
-            <span class="badge rounded-pill bg-primary">S{{getSeason(catgirl)}} - {{getType(catgirl)}}</span> 
-            <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span> 
-          </h6>
-          <h5 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h5>
-        </div>
+  <nav class="navbar navbar-expand-lg nav-color">
+    <div class="container-fluid">
+      <span class="navbar-brand clickable" [routerLink]="['/']">Catgirl Stats</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/search']">Catgirl Search</span>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
+  <div style="margin-top: 10px;">
+    <router-outlet></router-outlet>
   </div>
+
+
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <p class="col-md-4 mb-0 text-muted">CATGIRL ~ NYA NYA</p>
 

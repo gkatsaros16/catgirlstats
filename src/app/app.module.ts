@@ -5,17 +5,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
+import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SortPipe
+    SortPipe,
+    HomeComponent,
+    CatgirlSearchComponent
   ],
   imports: [
+    CommonModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [SortPipe],
   bootstrap: [AppComponent]

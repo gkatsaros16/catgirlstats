@@ -1,0 +1,25 @@
+<div class="row d-flex justify-content-center">
+    <div class="col-sm-6">
+        <label for="exampleFormControlInput1" class="form-label">Catgirl Number</label>
+        <form class="row g-3">
+            <div class="col-sm-9">
+                <label for="inputPassword2" class="visually-hidden">Catgirl Number</label>
+                <input [(ngModel)]="catgirlNumber" name="catgirlNumber" type="number" class="form-control" placeholder="Ex: 69420">
+            </div>
+            <div class="col-sm-3">
+                <button (click)="getCatgirl()" class="btn btn-primary mb-3">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div *ngIf="catgirl" class="row">
+    <div class="col-sm-6 d-flex justify-content-center">
+        <img [src]="catgirl.src" class="img-fluid" class="catgirl-big">
+    </div>
+    <div class="col-sm-4">
+        <h3><strong>{{ catgirl.name }}</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
+        <h4>Nya Score: {{ catgirl.nyaScore }}</h4>
+        <hr>
+        <h4>Owned: {{catgirl.total | number }}/{{total | number}} ({{catgirl.total / total | percent:'.3'}})</h4>
+    </div>
+</div>

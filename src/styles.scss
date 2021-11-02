@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.nav-color {
+    background-color: #FFF;
+    color: black;
+}
+
+.nav-link {
+    color: black;
+}
+
 .epic {
     background-color: purple
 }
@@ -19,6 +28,12 @@
     max-height: 300px; 
     max-width: 300px; 
     min-height: 300px;
+}
+
+.catgirl-big {
+    max-height: 500px; 
+    max-width: 500px; 
+    min-height: 500px;
 }
 
 .common-border:hover {

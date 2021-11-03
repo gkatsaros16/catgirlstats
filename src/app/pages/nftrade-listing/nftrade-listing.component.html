@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="d-flex justify-content-center mb-3">
+        <button class="btn btn-primary me-2" type="button" (click)="sortRecentlyListed()">Recently Listed</button>
+        <button class="btn btn-primary" type="button" (click)="sortLowestPriceAsc()">Price: Lowest to Highest</button>
+        <button class="btn btn-primary ms-2" type="button" (click)="sortHighestNyaDesc()">Nya Score: Highest to Lowest</button>
+    </div>
+    <div *ngFor="let trade of recentListing" class="col-sm-3">
+        <div (click)="goToNFT(trade)" class="card mb-3 clickable">
+            <div class="card-body">
+              <h5 class="card-subtitle mb-2 text-muted">{{trade.name}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}</h6>           
+              <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
+              <div>
+                <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
+                <span class="float-end">{{ trade.price }} BNB</span>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

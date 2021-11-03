@@ -26,9 +26,6 @@ let GET_CATGIRL = gql`
 export class nftadeContextService {
     recentListings$ = new BehaviorSubject([]);
     recentSold$ = new BehaviorSubject([]);
-    recentSoldHighest$ = new BehaviorSubject([]);
-    soldHighest$ = new BehaviorSubject([]);
-    soldLowest$ = new BehaviorSubject([]);
 
     constructor(
         private http: HttpClient,
@@ -134,6 +131,20 @@ export class nftadeContextService {
         }
     }
 
+    getRecentHighestNFTSold(id:any) {
+        if (!this.recentSold$.value) {
+            this.getRecentSold();
+        }
+        var recentSold = this.recentSold$.value;
+        if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
+            var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+            var sorted = filter.sort((a,b) => (parseFloat(a.last_sell) < parseFloat(b.last_sell)) ? 1 : -1);
+            return sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+        } else {
+            return null
+        }
+    }
+
     getRecentAveragePrice(id:any) {
         var totalPrice = 0;
         if ((this.recentSold$.value.length == 0)) {
@@ -150,6 +161,21 @@ export class nftadeContextService {
                 total: totalPrice,
                 count: recentAveragePriceArray.length
             };
+        } else {
+            return null;
+        }
+    }
+
+    getNyaScore (id:any) {
+        if ((this.recentSold$.value.length == 0)) {
+            this.getRecentSold();
+        }
+        var recentSold = this.recentSold$.value;
+        if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
+            var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
+            var sorted = filter.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((parseFloat(a.catgirlDetails.last_sell) > parseFloat(b.catgirlDetails.last_sell)) ? 1 : -1) : -1 );
+            var lowest = sorted.filter(x => x.catgirlDetails.nyaScore == sorted[sorted.length - 1].catgirlDetails.nyaScore);
+            return [sorted[0], lowest[lowest.length -1]]
         } else {
             return null;
         }

@@ -5,13 +5,17 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
           <li class="nav-item">
             <span class="nav-link clickable" [routerLink]="['/search']">Catgirl Search</span>
           </li>
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/nft-listing']">NFTrade Listing</span>
+          </li>
         </ul>
-      </div>
+        <span class="nav-item justify-content-end">
+          <span class="me-auto" style="font-size: small;">Send tip <3 : <span style="text-decoration: underline;">0xa119a6F239fEF7b429Fd89C43f0BF227C5C831Cb</span></span>
+        </span>
     </div>
   </nav>
   <div style="margin-top: 10px;">
@@ -20,7 +24,10 @@
 
 
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col-md-4 mb-0 text-muted">CATGIRL ~ NYA NYA</p>
+    <div class="col-md-4 mb-0 text-muted">
+      <a class="text text-muted" href="https://twitter.com/ghlboy"><i style="font-size: 25px" class="icon-twitter"></i></a>
+      <a class="text text-muted" href="https://twitch.com/ghoulboy"><i style="font-size: 28px" class="fa fa-twitch"></i></a>
+    </div>
 
     <a href="https://www.catgirl.io/" target="_blank" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
       <img src="../assets/logo/catgirl_logo.png" style="height: 50px; width: 50px;"/>

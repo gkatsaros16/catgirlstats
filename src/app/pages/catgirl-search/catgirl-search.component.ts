@@ -46,7 +46,10 @@ export class CatgirlSearchComponent {
   error;
   recentNFTListing;
   recentNFTSold;
+  recentHighestNFTSold;
   recentAveragePrice;
+  highestNya;
+  lowestNya;
 
   constructor(
     private apollo: Apollo,
@@ -80,8 +83,25 @@ export class CatgirlSearchComponent {
     this.recentNFTSold = this.nfTradeContext.getRecentNFTSold(this.catgirl.id);
   }
 
+  getRecentHighestNFTSold() {
+    this.recentHighestNFTSold = this.nfTradeContext.getRecentHighestNFTSold(this.catgirl.id);
+  }
+
   getRecentAveragePrice() {
     this.recentAveragePrice = this.nfTradeContext.getRecentAveragePrice(this.catgirl.id);
+  }
+
+  getNyaScore() {
+    var nyaScore = this.nfTradeContext.getNyaScore(this.catgirl.id);
+    if (nyaScore) {
+      this.highestNya = nyaScore[0];
+      this.lowestNya = nyaScore[1];
+    }
+  }
+
+  getSpecificName(magicNumber) {
+    this.catgirlNumber = magicNumber;
+    this.getCatgirl();
   }
 
   getCatgirl() {
@@ -111,8 +131,9 @@ export class CatgirlSearchComponent {
             this.catgirl.nyaScore = result.data.catgirls[0].nyaScore;
             this.getRecentNFTListing();
             this.getRecentNFTSold();
+            this.getRecentHighestNFTSold()
             this.getRecentAveragePrice();
-
+            this.getNyaScore();
             this.error = "";
           } else {
             this.catgirl = null;

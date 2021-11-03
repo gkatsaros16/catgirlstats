@@ -11,29 +11,43 @@
             </div>
         </form>
         <div *ngIf="error" class="text text-danger d-flex justify-content-center">{{ error }}</div>
+        <div class="d-flex justify-content-center">
+
+            <div class="btn-group" role="group">
+                <button (click)="getSpecificName(150228)" type="button" class="btn btn-primary">Mittsy</button>
+                <button (click)="getSpecificName(109816)" type="button" class="btn btn-primary">Celeste</button>
+                <button (click)="getSpecificName(97867)" type="button" class="btn btn-primary">Rin</button>
+                <button (click)="getSpecificName(126958)" type="button" class="btn btn-primary">Hana</button>
+                <button (click)="getSpecificName(98794)" type="button" class="btn btn-primary">Aoi</button>
+                <button (click)="getSpecificName(125201)" type="button" class="btn btn-primary">Kita</button>
+                <button (click)="getSpecificName(100804)" type="button" class="btn btn-primary">Lisa</button>
+                <button (click)="getSpecificName(109787)" type="button" class="btn btn-primary">Mae</button>
+              </div>
+        </div>
     </div>
 </div>
 
 <div *ngIf="catgirl" class="row">
-    <div class="col-sm-6 d-flex justify-content-center">
-        <img [src]="catgirl.src" class="img-fluid" class="catgirl-big">
+    <hr class="mt-3">
+    <div class="col-sm-6 text-center">
+        <img [src]="catgirl.src" class="img-fluid catgirl-big mt-5">
     </div>
     <div class="col-sm-4">
-        <h3><strong>{{ catgirl.name }}</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
-        <h4>Nya Score: {{ catgirl.nyaScore }}</h4>
+        <h3><strong>{{ catgirl?.name }}</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
+        <h4>Nya Score: {{ catgirl?.nyaScore }}</h4>
         <hr>
-        <h4>Owned: {{catgirl.total | number }}/{{total | number}} ({{catgirl.total / total | percent:'.3'}})</h4>
+        <h4>Owned: {{catgirl?.total | number }}/{{total | number}} ({{catgirl?.total / total | percent:'.3'}})</h4>
         <hr>
-        <h4>NFTRADE (recent 100):</h4>
+        <h4>NFTRADE: <small style="font-size: small;">(recent {{recentAveragePrice?.count}}/100 sold listing)</small></h4>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
+                        <h6 class="card-subtitle mb-2">Recent Listing <span class="text-muted float-end">{{ recentNFTListing?.listedAt | date:'short'}}</span></h6>
                         <div *ngIf="recentNFTListing">
-                            <h6 class="card-subtitle mb-2">Recent Listing <span class="text-muted float-end">{{ recentNFTListing.listedAt | date:'short'}}</span></h6>
                             <div class="row">
-                                <div class="col-sm-6">Price: {{ recentNFTListing.price }} BNB</div>
-                                <div class="col-sm-6">Nya Score: {{ recentNFTListing.catgirlDetails.nyaScore }}</div>
+                                <div class="col-sm-6">Price: {{ recentNFTListing?.price }} BNB</div>
+                                <div class="col-sm-6">Nya Score: {{ recentNFTListing?.catgirlDetails?.nyaScore }}</div>
                             </div>
                         </div>
 
@@ -46,11 +60,28 @@
             <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
-                        <div *ngIf="recentNFTSold">
-                            <h6 class="card-subtitle mb-2">Recent Sold <span class="text-muted float-end">{{ recentNFTSold.last_sell_at | date:'short'}}</span></h6>
+                        <h6 class="card-subtitle mb-2">Recent Sold <span class="text-muted float-end">{{ recentNFTSold?.last_sell_at | date:'short'}}</span></h6>
+                        <div *ngIf="recentNFTSold != null">
                             <div class="row">
-                                <div class="col-sm-6">Price: {{ recentNFTSold.last_sell }} BNB</div>
-                                <div class="col-sm-6">Nya Score: {{ recentNFTSold.catgirlDetails.nyaScore }}</div>                           
+                                <div class="col-sm-6">Price: {{ recentNFTSold?.last_sell }} BNB</div>
+                                <div class="col-sm-6">Nya Score: {{ recentNFTSold?.catgirlDetails?.nyaScore }}</div>                           
+                            </div>
+                        </div>
+
+                        <div *ngIf="!recentNFTSold" class="row">
+                            <div class="text text-danger">No recent sellings nya~</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card mb-1" style="width: 100%;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2">Recent Highest Sold<span class="text-muted float-end">{{ recentHighestNFTSold?.last_sell_at | date:'short'}}</span></h6>
+                        <div *ngIf="recentNFTSold">
+                            <div class="row">
+                                <div class="col-sm-6">Price: {{ recentHighestNFTSold?.last_sell }} BNB</div>
+                                <div class="col-sm-6">Nya Score: {{ recentHighestNFTSold?.catgirlDetails?.nyaScore }}</div>                           
                             </div>
                         </div>
 
@@ -64,10 +95,30 @@
                 <div class="col-sm-12">
                     <div class="card mb-1" style="width: 100%;">
                         <div class="card-body">
-                            <h6 class="card-subtitle mb-2">Recent Average Price</h6>
+                            <h6 class="card-subtitle mb-2">Nya Score Sold</h6>
                             <div *ngIf="recentAveragePrice" class="row">
-                                <div class="col-sm-12">Average Price: {{ (recentAveragePrice.total / recentAveragePrice.count) | number: '1.1-3' }} BNB 
-                                    <span><small class="text-muted">({{recentAveragePrice.total | number: '1.1-3'}} / {{recentAveragePrice.count}})</small></span>
+                                <div class="col-sm-6"> 
+                                    Highest: {{ highestNya?.catgirlDetails?.nyaScore}} @ {{ highestNya?.last_sell }} BNB
+                                </div> 
+                                <div class="col-sm-6"> 
+                                    Lowest: {{ lowestNya?.catgirlDetails?.nyaScore}} @ {{ lowestNya?.last_sell }} BNB
+                                </div> 
+                            </div>
+                            <div *ngIf="!recentAveragePrice" class="row">
+                                <div class="text text-danger">No recent sellings nya~</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <div class="card mb-1" style="width: 100%;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2">Recent Average Sold Price</h6>
+                            <div *ngIf="recentAveragePrice" class="row">
+                                <div class="col-sm-12">Average Price: {{ (recentAveragePrice?.total / recentAveragePrice?.count) | number: '1.1-3' }} BNB 
+                                    <span><small class="text-muted">({{recentAveragePrice?.total | number: '1.1-3'}} / {{recentAveragePrice?.count}})</small></span>
                                 </div> 
                             </div>
                             <div *ngIf="!recentAveragePrice" class="row">

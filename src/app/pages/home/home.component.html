@@ -19,9 +19,9 @@
                 </h6>
                 <h4 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h4>
                 <div class="row" style="font-size: small;">
-                    <small class="col-sm-4">RL: <span *ngIf="catgirl.recentListing">{{catgirl.recentListing?.price}} BNB</span></small>
-                    <small class="col-sm-4">RS: <span *ngIf="catgirl.recentSold">{{catgirl.recentSold?.last_sell}} BNB</span></small>
-                    <small class="col-sm-4">AP: <span *ngIf="catgirl.averagePrice">{{catgirl.averagePrice?.total / catgirl.averagePrice?.count | number: '1.1-3'}} BNB</span></small>
+                    <small class="col-sm-4">RL: <span *ngIf="catgirl.recentListing">{{catgirl.recentListing?.price}} <span style="font-size: smaller;">BNB</span></span></small>
+                    <small class="col-sm-4">RS: <span *ngIf="catgirl.recentSold">{{catgirl.recentSold?.last_sell}} <span style="font-size: smaller;">BNB</span></span></small>
+                    <small class="col-sm-4">AP: <span *ngIf="catgirl.averagePrice">{{catgirl.averagePrice?.total / catgirl.averagePrice?.count | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
                 </div>
             </div>
         </div>

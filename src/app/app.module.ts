@@ -9,13 +9,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
 import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.component';
+import { NFTradeListingComponent } from './pages/nftrade-listing/nftrade-listing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SortPipe,
     HomeComponent,
-    CatgirlSearchComponent
+    CatgirlSearchComponent,
+    NFTradeListingComponent
   ],
   imports: [
     CommonModule,

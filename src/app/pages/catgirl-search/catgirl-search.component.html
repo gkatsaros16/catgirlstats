@@ -11,18 +11,19 @@
             </div>
         </form>
         <div *ngIf="error" class="text text-danger d-flex justify-content-center">{{ error }}</div>
-        <div class="d-flex justify-content-center">
-
-            <div class="btn-group" role="group">
-                <button (click)="getSpecificName(150228)" type="button" class="btn btn-primary">Mittsy</button>
-                <button (click)="getSpecificName(109816)" type="button" class="btn btn-primary">Celeste</button>
-                <button (click)="getSpecificName(97867)" type="button" class="btn btn-primary">Rin</button>
-                <button (click)="getSpecificName(126958)" type="button" class="btn btn-primary">Hana</button>
-                <button (click)="getSpecificName(98794)" type="button" class="btn btn-primary">Aoi</button>
-                <button (click)="getSpecificName(125201)" type="button" class="btn btn-primary">Kita</button>
-                <button (click)="getSpecificName(100804)" type="button" class="btn btn-primary">Lisa</button>
-                <button (click)="getSpecificName(109787)" type="button" class="btn btn-primary">Mae</button>
-              </div>
+        <div class="row">
+            <div class="mb-2 col-sm-12 btn-group d-flex justify-content-center" role="group">
+                <button (click)="getSpecificName(150228)" type="button" style="max-width: 100px; min-width: 100px;"  class="btn btn-outline-primary">Mittsy</button>
+                <button (click)="getSpecificName(109816)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Celeste</button>
+                <button (click)="getSpecificName(97867)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Rin</button>
+                <button (click)="getSpecificName(126958)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Hana</button>
+            </div>
+            <div class="col-sm-12 btn-group d-flex justify-content-center" role="group">
+                <button (click)="getSpecificName(98794)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Aoi</button>
+                <button (click)="getSpecificName(125201)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Kita</button>
+                <button (click)="getSpecificName(100804)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Lisa</button>
+                <button (click)="getSpecificName(109787)" type="button" style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary">Mae</button>
+            </div>
         </div>
     </div>
 </div>

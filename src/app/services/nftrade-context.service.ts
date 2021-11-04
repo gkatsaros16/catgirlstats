@@ -35,7 +35,8 @@ export class nftadeContextService {
         this.getRecentSold();
     }
 
-    getRecentListings() {     
+    getRecentListings() {   
+        this.recentListings$.next([]); 
         this.http.get("https://api.nftrade.com/api/v1/tokens?limit=100&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
@@ -60,6 +61,7 @@ export class nftadeContextService {
                     })
                     .valueChanges.subscribe((result: any) => {
                     if (result.data.catgirls[0]) {
+                        catgirl.show = true;
                         catgirl.catgirlDetails = result.data.catgirls[0]
                         this.recentListings$.next([...this.recentListings$.value, catgirl])
                     } else {
@@ -68,6 +70,24 @@ export class nftadeContextService {
                 });
             });
         })
+    }
+
+    filterRecentListings(filterArray) {   
+        this.recentListings$.value.forEach(x => {
+            if (filterArray.some(y => y.characterId == x.catgirlDetails.characterId && y.rarity == x.catgirlDetails.rarity)) {
+                x.show = true;
+            } else {
+                x.show = false;
+            }
+        })
+        this.recentListings$.next(this.recentListings$.value);
+    }
+
+    showAllRecentListing() {   
+        this.recentListings$.value.map(x => {
+            x.show = true;
+        })
+        this.recentListings$.next(this.recentListings$.value);
     }
 
     getRecentSold() {

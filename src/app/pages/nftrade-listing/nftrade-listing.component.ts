@@ -1,3 +1,4 @@
+import { XhrFactory } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
@@ -21,8 +22,21 @@ let GET_COUNT = gql`
 })
 
 export class NFTradeListingComponent {
+  recentListing$;
   recentListing;
+
+  mittsyCheck;
+  celesteCheck;
+  rinCheck;
+  aoiCheck;
+  hanaCheck;
+  kitaCheck;
+  lisaCheck;
+  maeCheck;
   sub: Subscription;
+  disableSub: Subscription;
+  isDisable;
+  filter = [];
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
@@ -33,8 +47,17 @@ export class NFTradeListingComponent {
 
   ngOnInit() {
     this.sub = timer(1000).subscribe(() => {
-      this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
+      this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
+        this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
+      });
     });
+  }
+
+  disable() {
+    this.isDisable = true;
+    this.disableSub = timer(1000).subscribe(() => {
+      this.isDisable = false;
+    })
   }
 
   sortLowestPriceAsc() {
@@ -42,11 +65,11 @@ export class NFTradeListingComponent {
   }
 
   sortHighestNyaDesc() {
-    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : -1);
+    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 1 : -1) : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? ((parseFloat(a.catgirlDetails.price) > parseFloat(b.catgirlDetails.price)) ? 1 : -1) : (a.catgirlDetails.price === b.catgirlDetails.price) ? ((a.catgirlDetails.listedAt > b.catgirlDetails.listedAt) ? 1 : -1) : -1);
   }
 
   sortRecentlyListed() {
-    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
+    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (a.listedAt < b.listedAt) ? 1 :  -1);
   }
 
   goToNFT(trade) {
@@ -58,7 +81,42 @@ export class NFTradeListingComponent {
     return catgirl.name;
   }
 
+  applyFilter(catgirlDetails) {
+    var index = this.filter.findIndex(x => x.characterId == catgirlDetails.characterId && x.rarity == catgirlDetails.rarity)
+    if (index > -1) {
+      this.filter.splice(index, 1)
+    } else {
+      this.filter.push(catgirlDetails);
+    }
+
+    if (this.filter.length) {
+      this.nfTradeContext.filterRecentListings(this.filter);
+    } else {
+      this.nfTradeContext.showAllRecentListing();
+    }
+  }
+
+  refreshListing() {
+    this.disable();
+    this.clear();
+  }
+
+  clear() {
+    this.mittsyCheck = false;
+    this.celesteCheck= false;
+    this.rinCheck= false;
+    this.aoiCheck= false;
+    this.hanaCheck= false;
+    this.kitaCheck= false;
+    this.lisaCheck= false;
+    this.maeCheck= false;
+    this.filter = [];
+    this.nfTradeContext.showAllRecentListing();
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.recentListing$.unsubscribe();
+    this.disableSub.unsubscribe();
   }
 }

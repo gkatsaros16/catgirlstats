@@ -36,6 +36,15 @@
     min-height: 500px;
 }
 
+@media only screen and (max-width: 600px) {
+    .catgirl-big {
+        max-height: 412px; 
+        max-width: 412px; 
+        min-height: 412px;
+    }
+}
+
+
 .common-border:hover {
     box-shadow: 0 4px 5px 0 grey, 0 1px 10px 0 grey, 0 2px 4px -1px grey;
 }

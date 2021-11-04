@@ -1,21 +1,47 @@
 <div class="row">
-    <div class="d-flex justify-content-center mb-3">
-        <button class="btn btn-primary me-2" type="button" (click)="sortRecentlyListed()">Recently Listed</button>
-        <button class="btn btn-primary" type="button" (click)="sortLowestPriceAsc()">Price: Lowest to Highest</button>
-        <button class="btn btn-primary ms-2" type="button" (click)="sortHighestNyaDesc()">Nya Score: Highest to Lowest</button>
+    <div class="d-flex justify-content-center mb-2">
+        <button [disabled]="isDisable" class="btn btn-primary me-2" type="button" (click)="sortRecentlyListed()">Recently Listed</button>
+        <button [disabled]="isDisable" class="btn btn-primary" type="button" (click)="sortLowestPriceAsc()">Price: Lowest to Highest</button>
+        <button [disabled]="isDisable" class="btn btn-primary ms-2" type="button" (click)="sortHighestNyaDesc()">Nya Score: Highest to Lowest</button>
+        <i (click)="refreshListing()" style="font-size: 30px;" [ngStyle]="{'visibility': isDisable ? 'hidden' : '' }" class="fa fa-refresh text text-primary mt-1 ms-2 clickable" aria-hidden="true"></i>
     </div>
-    <div *ngFor="let trade of recentListing" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
-        <div (click)="goToNFT(trade)" class="card mb-3 clickable">
-            <div class="card-body">
-              <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{trade.contractName}}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}</h6>           
-              <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
-              <div>
-                <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
-                <span class="float-end">{{ trade.price }} BNB</span>
-              </div>
+    <div class="d-flex justify-content-center mb-3">
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input [(ngModel)]="mittsyCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 4, characterId: 0})" type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck1">Mittsy</label>
+            <input [(ngModel)]="celesteCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 3, characterId: 0})" type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck2">Celeste</label>
+            <input [(ngModel)]="rinCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 2, characterId: 1})" type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck3">Rin</label>
+            <input [(ngModel)]="hanaCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 2, characterId: 0})" type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck4">Hana</label>
+            <input [(ngModel)]="aoiCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 1, characterId: 1})" type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck5">Aoi</label>
+            <input [(ngModel)]="kitaCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 1, characterId: 0})" type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck6">Kita</label>
+            <input [(ngModel)]="lisaCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 0, characterId: 1})" type="checkbox" class="btn-check" id="btncheck7" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck7">Lisa</label>          
+            <input [(ngModel)]="maeCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 0, characterId: 0})" type="checkbox" class="btn-check" id="btncheck8" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck8">Mae</label>
+            <span (click)="clear()" class="btn btn-link">Clear</span>
+        </div>
+
+    </div>
+
+    <ng-container *ngFor="let trade of recentListing">
+        <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div (click)="goToNFT(trade)" class="card mb-3 clickable">
+                <div class="card-body">
+                <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{trade.contractName}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}</h6>           
+                <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
+                <div>
+                    <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
+                    <span class="float-end">{{ trade.price }} BNB</span>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 </div>

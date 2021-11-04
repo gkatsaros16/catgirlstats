@@ -46,7 +46,7 @@ export class NFTradeListingComponent {
   }
 
   ngOnInit() {
-    this.sub = timer(1000).subscribe(() => {
+    this.sub = timer(500).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
       });
@@ -116,7 +116,7 @@ export class NFTradeListingComponent {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-    this.recentListing$.unsubscribe();
-    this.disableSub.unsubscribe();
+    this.recentListing$?.unsubscribe();
+    this.disableSub?.unsubscribe();
   }
 }

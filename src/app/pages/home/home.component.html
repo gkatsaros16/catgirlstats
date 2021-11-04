@@ -9,7 +9,7 @@
     <h2><span class="d-flex justify-content-center">TOTAL CATGIRLS: {{ total | number }}</span></h2>
 </div>
 <div class="row">
-    <div class="col-sm-3" *ngFor="let catgirl of CATGIRLS | sort:'desc' : 'rank'">
+    <div class="col-sm-12 col-md-4 col-lg-3" *ngFor="let catgirl of CATGIRLS | sort:'desc' : 'rank'">
         <div class="card clickable" [ngClass]="getBorderHover(catgirl)" (click)="selectCatgirl(catgirl)" style="margin-bottom: 10px;">
             <div class="card-body">
                 <h5 class="card-title">{{catgirl.name}}</h5>
@@ -19,9 +19,9 @@
                 </h6>
                 <h4 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h4>
                 <div class="row" style="font-size: small;">
-                    <small class="col-sm-4">RL: <span *ngIf="catgirl.recentListing">{{catgirl.recentListing?.price | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
-                    <small class="col-sm-4">RS: <span *ngIf="catgirl.recentSold">{{catgirl.recentSold?.last_sell | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
-                    <small class="col-sm-4">AP: <span *ngIf="catgirl.averagePrice">{{catgirl.averagePrice?.total / catgirl.averagePrice?.count | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
+                    <small class="col-xs-2 col-md-4">RL: <span *ngIf="catgirl.recentListing">{{catgirl.recentListing?.price | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
+                    <small class="col-xs-2 col-md-4">RS: <span *ngIf="catgirl.recentSold">{{catgirl.recentSold?.last_sell | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
+                    <small class="col-xs-2 col-md-4">AP: <span *ngIf="catgirl.averagePrice">{{catgirl.averagePrice?.total / catgirl.averagePrice?.count | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
                 </div>
             </div>
         </div>

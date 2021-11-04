@@ -29,10 +29,10 @@
 
 <div *ngIf="catgirl" class="row">
     <hr class="mt-3">
-    <div class="col-sm-6 text-center">
+    <div class="col-sm-12 col-lg-6 text-center">
         <img [src]="catgirl.src" class="img-fluid catgirl-big mt-5">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-12 col-md-12 col-lg-4">
         <h3><strong>{{ catgirl?.name }}</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
         <h4>Nya Score: {{ catgirl?.nyaScore }}</h4>
         <hr>

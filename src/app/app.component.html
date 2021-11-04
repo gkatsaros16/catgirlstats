@@ -1,11 +1,12 @@
 <div class="container">
-  <nav class="navbar navbar-expand-lg nav-color">
+  <nav class="navbar navbar-expand-lg navbar-light nav-color">
     <div class="container-fluid">
       <span class="navbar-brand clickable" [routerLink]="['/']">Catgirl Stats</span>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button style="color: red;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <span class="nav-link clickable" [routerLink]="['/search']">Catgirl Search</span>
           </li>
@@ -13,9 +14,16 @@
             <span class="nav-link clickable" [routerLink]="['/nft-listing']">NFTrade Listing</span>
           </li>
         </ul>
-        <span class="nav-item justify-content-end">
-          <span class="me-auto" style="font-size: small;">Send tip <3 : <span style="text-decoration: underline;">0xa119a6F239fEF7b429Fd89C43f0BF227C5C831Cb</span></span>
+        <span class="navbar-text">
+          <span (click)="copyAddress()" class="me-auto" style="font-size: 15px;">
+            <span *ngIf="isCopied">Copied! </span>
+            <span *ngIf="!isCopied">Send tip <3 :</span>
+              <span class="clickable" style="text-decoration: underline;">
+                0xa119a6F239fEF7b429Fd89C43f0BF227C5C831Cb <i class="ms-1 mt-1 fa fa-copy"></i>
+              </span>
+            </span>
         </span>
+      </div>
     </div>
   </nav>
   <div style="margin-top: 10px;">
@@ -35,10 +43,12 @@
 
     <ul class="nav col-md-4 justify-content-end text-muted">
       <div class="d-flex justify-content-center">
-        <small>Send CGC or BNB tip to:</small>
+        <small *ngIf="!isCopied">Send CGC or BNB tip to:</small>
+        <small *ngIf="isCopied">Copied! thank you ~</small>
       </div>
-      <div class="d-flex justify-content-center">
+      <div (click)="copyAddress()" class="clickable d-flex justify-content-center">
         <small>0xa119a6F239fEF7b429Fd89C43f0BF227C5C831Cb</small>
+        <i class="ms-1 mt-1 fa fa-copy"></i>
       </div>  
     </ul>
   </footer>

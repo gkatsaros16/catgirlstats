@@ -1,6 +1,7 @@
 
 import { XhrFactory } from '@angular/common';
 import { Component } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
 import { nftadeContextService } from '../../../app/services/nftrade-context.service';
@@ -38,15 +39,17 @@ export class NFTradeListingComponent {
   disableSub: Subscription;
   isDisable;
   filter = [];
+  anal
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
-    private nfTradeContext: nftadeContextService
+    private nfTradeContext: nftadeContextService,
+    public analysis: AngularFireAnalytics
     ) {
-
   }
 
   ngOnInit() {
+    this.analysis.logEvent('hi', {hello: "world"})
     this.sub = timer(500).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
@@ -98,6 +101,7 @@ export class NFTradeListingComponent {
   }
 
   refreshListing() {
+    this.analysis.logEvent('hi', {hello: "world"})
     this.disable();
     this.clear();
   }

@@ -60,7 +60,7 @@ export class nftadeContextService {
                     }
                     })
                     .valueChanges.subscribe((result: any) => {
-                    if (result.data.catgirls[0]) {
+                    if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
                         catgirl.show = true;
                         catgirl.catgirlDetails = result.data.catgirls[0]
                         this.recentListings$.next([...this.recentListings$.value, catgirl])

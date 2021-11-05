@@ -49,7 +49,6 @@ export class NFTradeListingComponent {
   }
 
   ngOnInit() {
-    this.analysis.logEvent('hi', {hello: "world"})
     this.sub = timer(500).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
@@ -77,6 +76,7 @@ export class NFTradeListingComponent {
   }
 
   goToNFT(trade) {
+    this.analysis.logEvent('go_to_nftrade', {tokenID: trade.tokenID})
     window.open(`https://app.nftrade.com/assets/bsc/0xe796f4b5253a4b3edb4bb3f054c03f147122bacd/${trade.tokenID}`, '_blank');
   }
 
@@ -101,7 +101,6 @@ export class NFTradeListingComponent {
   }
 
   refreshListing() {
-    this.analysis.logEvent('hi', {hello: "world"})
     this.disable();
     this.clear();
   }

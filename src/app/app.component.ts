@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { nftadeContextService } from './services/nftrade-context.service'
 @Component({
   selector: 'app-root',
@@ -8,9 +9,10 @@ import { nftadeContextService } from './services/nftrade-context.service'
 
 export class AppComponent {
   isCopied = false;
-  constructor(private nftContext: nftadeContextService) {}
+  constructor(private nftContext: nftadeContextService, private analytics: AngularFireAnalytics) {}
 
   copyAddress() {
+    this.analytics.logEvent('copied_address')
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

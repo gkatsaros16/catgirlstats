@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { SortPipe } from './pipes/sort.pipe'
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +11,7 @@ import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.co
 import { NFTradeListingComponent } from './pages/nftrade-listing/nftrade-listing.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics/';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [

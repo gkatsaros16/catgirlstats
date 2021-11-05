@@ -1,5 +1,7 @@
-import { XhrFactory } from '@angular/common/http';
+
+import { XhrFactory } from '@angular/common';
 import { Component } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
 import { nftadeContextService } from '../../../app/services/nftrade-context.service';
@@ -37,12 +39,13 @@ export class NFTradeListingComponent {
   disableSub: Subscription;
   isDisable;
   filter = [];
+  anal
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
-    private nfTradeContext: nftadeContextService
+    private nfTradeContext: nftadeContextService,
+    public analysis: AngularFireAnalytics
     ) {
-
   }
 
   ngOnInit() {
@@ -73,6 +76,7 @@ export class NFTradeListingComponent {
   }
 
   goToNFT(trade) {
+    this.analysis.logEvent('go_to_nftrade', {tokenID: trade.tokenID})
     window.open(`https://app.nftrade.com/assets/bsc/0xe796f4b5253a4b3edb4bb3f054c03f147122bacd/${trade.tokenID}`, '_blank');
   }
 

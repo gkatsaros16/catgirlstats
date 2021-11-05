@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
 import { CatgirlContextService } from 'src/app/services/catgirl-context.service';
 import { nftadeContextService } from 'src/app/services/nftrade-context.service';
@@ -56,13 +57,15 @@ export class CatgirlSearchComponent {
     private apollo: Apollo,
     private context: CatgirlContextService,
     private nfTradeContext: nftadeContextService,
-    public analysis: AngularFireAnalytics
+    public analytics: AngularFireAnalytics,
+    public titleService: Title
 
   ) {
     this.CATGIRLS = this.context.CATGIRLS;
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Catgirl Stats | Search")
     this.CATGIRLS.forEach(CATGIRL => {
       this.apollo
         .watchQuery({
@@ -108,7 +111,7 @@ export class CatgirlSearchComponent {
   }
 
   getCatgirl() {
-      this.analysis.logEvent('search_catgirl_number', {catgirlNumber: this.catgirlNumber.toString()})
+      this.analytics.logEvent('search_catgirl_number', {catgirlNumber: this.catgirlNumber.toString()})
       this.apollo
         .watchQuery({
           query: GET_CATGIRL,

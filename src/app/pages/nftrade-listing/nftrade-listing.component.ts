@@ -2,6 +2,7 @@
 import { XhrFactory } from '@angular/common';
 import { Component } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
 import { nftadeContextService } from '../../../app/services/nftrade-context.service';
@@ -44,11 +45,13 @@ export class NFTradeListingComponent {
     private apollo: Apollo,
     private context: CatgirlContextService,
     private nfTradeContext: nftadeContextService,
-    public analysis: AngularFireAnalytics
+    public analytics: AngularFireAnalytics,
+    public titleService: Title,
     ) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Catgirl Stats | Search")
     this.sub = timer(500).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
@@ -76,7 +79,7 @@ export class NFTradeListingComponent {
   }
 
   goToNFT(trade) {
-    this.analysis.logEvent('go_to_nftrade', {tokenID: trade.tokenID})
+    this.analytics.logEvent('go_to_nftrade', {tokenID: trade.tokenID})
     window.open(`https://app.nftrade.com/assets/bsc/0xe796f4b5253a4b3edb4bb3f054c03f147122bacd/${trade.tokenID}`, '_blank');
   }
 

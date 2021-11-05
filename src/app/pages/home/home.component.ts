@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
 import { nftadeContextService } from 'src/app/services/nftrade-context.service';
@@ -21,25 +22,30 @@ let GET_COUNT = gql`
 })
 
 export class HomeComponent {
-  title = 'catgirl-stats2';
   total = 0;
   selectedCatgirl = {};
   sub: Subscription
   sub2: Subscription
   CATGIRLS
+  loading = true;
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
-    private nfTradeContext: nftadeContextService
+    private nfTradeContext: nftadeContextService,
+    private titleService: Title
     ) {
     this.CATGIRLS = this.context.CATGIRLS;
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Catgirl Stats")
     this.initCatgirls();
     this.selectedCatgirl = this.CATGIRLS.find(x => x.id == "4:0");
     this.sub = interval(5000).subscribe(() => this.getCatgirls());
-    this.sub2 = timer(1000).subscribe(() => this.getNFTTadeStats());
+    this.sub2 = timer(1000).subscribe(() => {
+      this.getNFTTadeStats()
+      this.loading = false;
+    });
   }
 
   getNFTTadeStats() {

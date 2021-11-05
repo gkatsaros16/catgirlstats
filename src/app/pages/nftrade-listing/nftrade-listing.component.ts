@@ -51,7 +51,7 @@ export class NFTradeListingComponent {
   }
 
   ngOnInit() {
-    this.titleService.setTitle("Catgirl Stats | Search")
+    this.titleService.setTitle("Catgirl Stats | NFT Listing")
     this.sub = timer(500).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);

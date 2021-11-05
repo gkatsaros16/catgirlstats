@@ -1,4 +1,5 @@
-import { XhrFactory } from '@angular/common/http';
+
+import { XhrFactory } from '@angular/common';
 import { Component } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';

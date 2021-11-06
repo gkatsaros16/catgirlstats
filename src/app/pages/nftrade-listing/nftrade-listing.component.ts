@@ -40,6 +40,8 @@ export class NFTradeListingComponent {
   disableSub: Subscription;
   isDisable;
   filter = [];
+  filterCount$;
+  filterCount;
   anal
   constructor(
     private apollo: Apollo,
@@ -57,6 +59,10 @@ export class NFTradeListingComponent {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
       });
     });
+
+    this.filterCount$ = this.nfTradeContext.filterCount$.subscribe(x => {
+      this.filterCount = x
+    });
   }
 
   disable() {
@@ -71,7 +77,7 @@ export class NFTradeListingComponent {
   }
 
   sortHighestNyaDesc() {
-    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 1 : -1) : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? ((parseFloat(a.catgirlDetails.price) > parseFloat(b.catgirlDetails.price)) ? 1 : -1) : (a.catgirlDetails.price === b.catgirlDetails.price) ? ((a.catgirlDetails.listedAt > b.catgirlDetails.listedAt) ? 1 : -1) : -1);
+    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? ((parseFloat(a.price) > parseFloat(b.price)) ? 1 : -1) : -1) : -1);
   }
 
   sortRecentlyListed() {
@@ -106,6 +112,7 @@ export class NFTradeListingComponent {
   refreshListing() {
     this.disable();
     this.clear();
+    this.nfTradeContext.getRecentListings();
   }
 
   clear() {

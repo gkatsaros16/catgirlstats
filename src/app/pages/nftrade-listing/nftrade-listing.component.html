@@ -26,8 +26,12 @@
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck7">Lisa</label>          
             <input [(ngModel)]="maeCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 0, characterId: 0})" type="checkbox" class="btn-check" id="btncheck8" autocomplete="off">
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck8">Mae</label>
+        </div>       
+    </div>
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <span *ngIf="recentListing?.length">Listing: {{filterCount}}</span>
         </div>
-        
     </div>
 
     <ng-container *ngFor="let trade of recentListing">
@@ -39,7 +43,7 @@
                 <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
                 <div>
                     <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
-                    <span class="float-end">{{ trade.price }} BNB</span>
+                    <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
                 </div>
                 </div>
             </div>

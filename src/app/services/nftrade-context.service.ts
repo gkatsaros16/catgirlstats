@@ -26,7 +26,8 @@ let GET_CATGIRL = gql`
 export class nftadeContextService {
     recentListings$ = new BehaviorSubject([]);
     recentSold$ = new BehaviorSubject([]);
-
+    filterCount$ = new BehaviorSubject(0);
+    
     constructor(
         private http: HttpClient,
         private apollo: Apollo
@@ -37,7 +38,8 @@ export class nftadeContextService {
 
     getRecentListings() {   
         this.recentListings$.next([]); 
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=100&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
+        this.filterCount$.next(0); 
+        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=500&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -63,6 +65,7 @@ export class nftadeContextService {
                     if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
                         catgirl.show = true;
                         catgirl.catgirlDetails = result.data.catgirls[0]
+                        this.filterCount$.next(this.filterCount$.value + 1)
                         this.recentListings$.next([...this.recentListings$.value, catgirl])
                     } else {
 
@@ -73,26 +76,30 @@ export class nftadeContextService {
     }
 
     filterRecentListings(filterArray) {   
+        var count = 0;
         this.recentListings$.value.forEach(x => {
             if (filterArray.some(y => y.characterId == x.catgirlDetails.characterId && y.rarity == x.catgirlDetails.rarity)) {
                 x.show = true;
+                count++
             } else {
                 x.show = false;
             }
         })
+
+        this.filterCount$.next(count);
         this.recentListings$.next(this.recentListings$.value);
     }
 
     showAllRecentListing() {   
         this.recentListings$.value.map(x => {
             x.show = true;
-        })
+        });
+        this.filterCount$.next(this.recentListings$.value.length);
         this.recentListings$.next(this.recentListings$.value);
     }
 
     getRecentSold() {
-        var count = 0;
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=100&skip=0&search=catgirl&order=&verified=&sort=sold_desc").subscribe((x:any[]) => {
+        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=400&skip=0&search=catgirl&order=&verified=&sort=sold_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({

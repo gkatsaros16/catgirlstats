@@ -34,7 +34,7 @@
         <img [src]="catgirl.src" class="img-fluid catgirl-big mt-5">
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4">
-        <h3><strong>{{ catgirl?.name }}</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
+        <h3><strong>{{ catgirl?.name }} (#{{catgirlNumber}})</strong> <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span></h3>
         <h4>Nya Score: {{ catgirl?.nyaScore }}</h4>
         <hr>
         <h4>Owned: {{catgirl?.total | number }}/{{total | number}} ({{catgirl?.total / total | percent:'.3'}})</h4>

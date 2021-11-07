@@ -42,7 +42,7 @@ export class HomeComponent {
     this.initCatgirls();
     this.selectedCatgirl = this.CATGIRLS.find(x => x.id == "4:0");
     this.sub = interval(5000).subscribe(() => this.getCatgirls());
-    this.sub2 = timer(1000).subscribe(() => {
+    this.sub2 = timer(1300).subscribe(() => {
       this.getNFTTadeStats()
       this.loading = false;
     });

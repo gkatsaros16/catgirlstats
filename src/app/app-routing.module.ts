@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.component';
 import { NFTradeListingComponent } from './pages/nftrade-listing/nftrade-listing.component';
-import { NyaScoresComponent } from './pages/nya-scores/nya-scores.component';
 
 const routes: Routes = [
   {
@@ -17,10 +16,6 @@ const routes: Routes = [
   {
     path: 'nft-listing',
     component: NFTradeListingComponent,
-  },
-  {
-    path: 'nya-scores',
-    component: NyaScoresComponent,
   },
 ];
 

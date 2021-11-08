@@ -12,8 +12,6 @@ import { NFTradeListingComponent } from './pages/nftrade-listing/nftrade-listing
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics/';
 import { BrowserModule } from '@angular/platform-browser';
-import { NyaScoresComponent } from './pages/nya-scores/nya-scores.component';
-import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -21,8 +19,7 @@ import { ChartsModule } from 'ng2-charts';
     SortPipe,
     HomeComponent,
     CatgirlSearchComponent,
-    NFTradeListingComponent,
-    NyaScoresComponent
+    NFTradeListingComponent
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -34,7 +31,6 @@ import { ChartsModule } from 'ng2-charts';
       appId: "1:1096209442758:web:77cbee7be8d6c452f334c7",
       measurementId: "G-QD734G04EE"
     }),
-    ChartsModule,
     AngularFireAnalyticsModule,
     CommonModule,
     FormsModule,

@@ -202,7 +202,7 @@ export class CatgirlContextService {
             catgirlcharacterId: split[1],
             catgirlrarity: split[0]
         }
-        this.http.post("https://localhost:5002/CatgirlStats/GetAllCatgirlsNyaScoreCount", model).subscribe((x:any) => {
+        this.http.post("http://159.89.80.128:80/CatgirlStats/GetAllCatgirlsNyaScoreCount", model).subscribe((x:any) => {
             var values = [];
             var count =[];
 

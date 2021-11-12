@@ -1,0 +1,12 @@
+<ng-container *ngFor="let catgirl of catgirls">
+    <div *ngIf="catgirl.nyaScores.count.length > 0" style="display: block">
+        <canvas baseChart
+            [datasets]="catgirl.nyaScores.values"
+            [labels]="catgirl.nyaScores.count"
+            [options]="catgirl.nyaScores.options"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+        </canvas>
+    </div>
+</ng-container>
+

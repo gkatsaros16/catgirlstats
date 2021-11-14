@@ -8,13 +8,13 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <span class="nav-link clickable" [routerLink]="['/search']">Catgirl Search</span>
+            <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/search']">Catgirl Search</span>
           </li>
           <li class="nav-item">
-            <span class="nav-link clickable" [routerLink]="['/nft-listing']">NFTrade Listing</span>
+            <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/nft-listing']">NFTrade Listing</span>
           </li>
           <li class="nav-item">
-            <span class="nav-link clickable" [routerLink]="['/nya-scores']">Nya Scores</span>
+            <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/nya-scores']">Nya Scores</span>
           </li>
         </ul>
         <span class="navbar-text">
@@ -35,14 +35,25 @@
 
 
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+
     <div class="col-md-4 mb-0 text-muted">
-      <a class="text text-muted" href="https://twitter.com/ghlboy"><i style="font-size: 25px" class="icon-twitter"></i></a>
-      <a class="text text-muted" href="https://twitch.com/ghoulboy"><i style="font-size: 28px" class="fa fa-twitch"></i></a>
+      <div class="row">
+        <span class="text text-muted">RIP Yia Yia <3</span>
+      </div>
+      <div class="row">
+        
+        
+      </div>
     </div>
 
-    <a href="https://www.catgirl.io/" target="_blank" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <img src="../assets/logo/catgirl_logo.png" style="height: 50px; width: 50px;"/>
-    </a>
+    <div class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <a class="text text-muted me-3" href="https://twitter.com/ghlboy"><i style="font-size: 36px" class="icon-twitter"></i></a>
+      <a href="https://www.catgirl.io/" target="_blank" >
+        <img src="../assets/logo/catgirl_logo.png" style="height: 50px; width: 50px;"/>
+      </a>
+      <a class="text text-muted" href="https://twitch.com/ghoulboy"><i style="font-size: 36px" class="fa fa-twitch ms-3"></i></a>
+    </div>
+
 
     <ul class="nav col-md-4 justify-content-end text-muted">
       <div class="d-flex justify-content-center">

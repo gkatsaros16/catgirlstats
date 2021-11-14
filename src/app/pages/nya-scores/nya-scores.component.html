@@ -1,4 +1,9 @@
-<ng-container *ngFor="let catgirl of catgirls">
+<div *ngIf="!catgirls" class="d-flex justify-content-center" style="display: block;">
+    <div class="spinner-border text-primary" style="height: 4rem;width: 4rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<ng-container *ngFor="let catgirl of catgirls">  
     <div *ngIf="catgirl.nyaScores.count.length > 0" style="display: block">
         <canvas baseChart
             [datasets]="catgirl.nyaScores.values"

@@ -6,7 +6,18 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul *ngIf="!mobile" class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/search']">Catgirl Search</span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/nft-listing']">NFTrade Listing</span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/nya-scores']">Nya Scores</span>
+          </li>
+        </ul>
+        <ul *ngIf="mobile" class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/search']">Catgirl Search</span>
           </li>

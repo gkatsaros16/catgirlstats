@@ -10,7 +10,14 @@ import { nftadeContextService } from './services/nftrade-context.service'
 export class AppComponent {
   isCopied = false;
   constructor(private nftContext: nftadeContextService, private analytics: AngularFireAnalytics) {}
+  mobile = false;
 
+  ngOnInit() {
+    if (window.screen.width < 500) { // 768px portrait
+      this.mobile = true;
+    }
+  }
+  
   copyAddress() {
     this.analytics.logEvent('copied_address')
     const selBox = document.createElement('textarea');

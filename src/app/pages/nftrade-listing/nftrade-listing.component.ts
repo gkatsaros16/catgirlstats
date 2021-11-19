@@ -73,11 +73,25 @@ export class NFTradeListingComponent {
   }
 
   sortLowestPriceAsc() {
-    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseFloat(a.price) > parseFloat(b.price)) ? 1 : -1);
+    this.recentListing = 
+    this.nfTradeContext.recentListings$.value.sort((a,b) => 
+    (parseFloat(a.price) > parseFloat(b.price)) ? 
+    1 : (parseFloat(a.price) === parseFloat(b.price)) ? 
+    ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
+    1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
+    ((a.catgirlDetails.nyaScore < b.catgirlDetails.nyaScore) ? 
+    1 : -1) : -1) : -1);
   }
 
   sortHighestNyaDesc() {
-    this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? ((parseFloat(a.price) > parseFloat(b.price)) ? 1 : -1) : -1) : -1);
+    this.recentListing = 
+    this.nfTradeContext.recentListings$.value.sort((a,b) => 
+    (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
+    1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? 
+    ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
+    1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
+    ((parseFloat(a.price) > parseFloat(b.price)) ? 
+    1 : -1) : -1) : -1);
   }
 
   sortRecentlyListed() {

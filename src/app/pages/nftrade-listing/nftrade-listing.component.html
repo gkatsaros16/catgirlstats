@@ -45,13 +45,13 @@
         <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
             <div (click)="goToNFT(trade)" class="card mb-3 clickable hover-border">
                 <div class="card-body">
-                <h5 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}<span class="float-end mt-1" style="font-size: 12px;">{{trade.contractName}} <i class="fa fa-external-link"></i></span></h5>
-                <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>           
-                <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
-                <div>
-                    <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
-                    <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
-                </div>
+                    <h5 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}<span class="float-end mt-1" style="font-size: 12px;">{{trade.contractName}} <i class="fa fa-external-link"></i></span></h5>
+                    <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>           
+                    <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
+                    <div>
+                        <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
+                        <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
+                    </div>
                 </div>
             </div>
         </div>

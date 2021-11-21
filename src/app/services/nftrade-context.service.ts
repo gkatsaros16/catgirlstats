@@ -99,7 +99,7 @@ export class nftadeContextService {
     }
 
     getRecentSold() {
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=400&skip=0&search=catgirl&order=&verified=&sort=sold_desc").subscribe((x:any[]) => {
+        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=1000&skip=0&search=catgirl&order=&verified=&sort=sold_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({

@@ -32,6 +32,7 @@ let GET_COUNT = gql`
   providedIn: 'root'
 })
 export class CatgirlContextService {
+    salesAnalysisSet$ = new BehaviorSubject(false);
     allCatgirls$ = new BehaviorSubject([]);
     nyaScores$ = new BehaviorSubject([]);
     totalCatgirls$ = new BehaviorSubject(0);
@@ -55,7 +56,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "1:0",
@@ -69,7 +71,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "2:0",
@@ -83,7 +86,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "3:0",
@@ -97,7 +101,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "4:0",
@@ -111,7 +116,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "0:1",
@@ -125,7 +131,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "1:1",
@@ -139,7 +146,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     },
     {
         id: "2:1",
@@ -153,7 +161,8 @@ export class CatgirlContextService {
             values: [],
             count: [],
             options: {}
-        }
+        },
+        sales: []
     }
   ]
 

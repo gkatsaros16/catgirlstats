@@ -39,9 +39,9 @@
         <hr>
         <h4>Owned: {{catgirl?.total | number }}/{{total | number}} ({{catgirl?.total / total | percent:'.3'}})</h4>
         <hr>
-        <h4>NFTRADE: <small style="font-size: small;">(recent {{recentAveragePrice?.count}}/400 sold listing)</small></h4>
+        <h4>NFTRADE: <small style="font-size: small;">(recent {{recentAveragePrice?.count}}/1000 sold listing)</small></h4>
         <div class="row">
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
                         <h6 class="card-subtitle mb-2">Recent Listing <span class="text-muted float-end">{{ recentNFTListing?.listedAt | date:'short'}}</span></h6>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
                         <h6 class="card-subtitle mb-2">Recent Highest Sold<span class="text-muted float-end">{{ recentHighestNFTSold?.last_sell_at | date:'short'}}</span></h6>
@@ -91,8 +91,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12">
+            </div> -->
+            <!-- <div class="col-sm-12">
                 <div class="col-sm-12">
                     <div class="card mb-1" style="width: 100%;">
                         <div class="card-body">
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-sm-12">
                 <div class="col-sm-12">
                     <div class="card mb-1" style="width: 100%;">
@@ -125,6 +125,15 @@
                             <div *ngIf="!recentAveragePrice" class="row">
                                 <div class="text text-danger">No recent sellings nya~</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <div class="card mb-1" style="width: 100%;">
+                        <div [ngClass]="getBorderHover(catgirl)" class="card-body d-flex justify-content-center clickable" [routerLink]="['/sales-analysis']">
+                            <div>Indepth Sales Analysis</div>
                         </div>
                     </div>
                 </div>

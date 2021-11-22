@@ -14,15 +14,14 @@ export class CryptoContextService {
     constructor(
         private http: HttpClient,
     ) { 
-        this.sub$ = timer(500, 10000).subscribe(() => {
+        this.sub$ = timer(500, 60000).subscribe(() => {
             this.getCurrentBNBPrice();
         });
         this.getCryptoPricesForLast16days();
     }
 
   getCurrentBNBPrice() {
-    var today = moment(new Date()).format("M/D/YYYY");
-    this.http.get("https://localhost:5002/bnb/GetBNBPriceForDate?date="+today).subscribe((x:any) => {
+    this.http.get("https://catgirlstats.dev/bnb/GetBNBPriceForToday").subscribe((x:any) => {
         if (x) {
             this.bnbPrice$.next(x);
         }
@@ -32,7 +31,7 @@ export class CryptoContextService {
   getCryptoPricesForLast16days() {
     for (let index = 0; index < 17; index++) {
         var date = moment().subtract(index, "days").format("M/D/YYYY");
-        this.http.get("https://localhost:5002/bnb/GetBNBPriceForDate?date="+date).subscribe(x => {
+        this.http.get("https://catgirlstats.dev/bnb/GetBNBPriceForDate?date="+date).subscribe(x => {
             var date = moment().subtract(this.bnbPriceBook$.value.count, "days").format("M/D/YYYY");
             this.bnbPriceBook$.value[date] = x;
             this.bnbPriceBook$.value.count++;

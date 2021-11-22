@@ -178,7 +178,6 @@ export class CatgirlContextService {
         if (result.data?.catgirls) {
             skip += 1000;
             this.allCatgirls$.next([...this.allCatgirls$.value, ...result.data.catgirls])
-            console.log(skip)
             if (skip <= this.totalCatgirls$.value) {
                 this.getAllCatgirls(skip);
             }

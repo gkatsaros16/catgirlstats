@@ -1,8 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
+import * as moment from 'moment';
 import { CatgirlContextService } from 'src/app/services/catgirl-context.service';
+import { CryptoContextService } from 'src/app/services/crypto-context.service';
 import { nftadeContextService } from 'src/app/services/nftrade-context.service';
 
 @Component({
@@ -16,24 +19,29 @@ export class SalesAnalysisComponent {
   catgirls;
   selectedCatgirl;
   earliestSale;
-  latestSale = Date.now();
+  salesDictionary = {};
+  latestSale = new Date();
+
+
   constructor(
     private context: CatgirlContextService,
     private nfTradeContext: nftadeContextService,
     public analytics: AngularFireAnalytics,
-    public titleService: Title
+    public titleService: Title,
+    public crypto: CryptoContextService,
+    public http: HttpClient
   ) {}
   
   ngOnInit() {
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
       if (x.length == 1000) {
-        console.log(x)
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {
               if (y.id == (x.catgirlDetails.rarity + ':' + x.catgirlDetails.characterId)) {
-                y.sales.push(x)
+                this.adjustSale(x);
+                y.sales.push(x);
               }
             })
             if (!this.earliestSale) {
@@ -97,7 +105,7 @@ export class SalesAnalysisComponent {
   getQuantile = (sortedArr, q) => {
       const pos = (sortedArr.length - 1) * q;
       const base = Math.floor(pos);
-      return sortedArr[base].last_sell;
+      return sortedArr[base].adjusted_sell;
   };
 
   q25(arr){
@@ -115,7 +123,7 @@ export class SalesAnalysisComponent {
   getSum(arr){
     var sum = 0;
     arr.forEach(x => {
-      sum += parseFloat(x.last_sell);
+      sum += parseFloat(x.adjusted_sell);
     });
     return sum;
   }
@@ -125,7 +133,7 @@ export class SalesAnalysisComponent {
   }
 
   sort(arr){
-    return arr.sort((a,b) => parseFloat(a.last_sell) > parseFloat(b.last_sell) ? 1 : -1);
+    return arr.sort((a,b) => parseFloat(a.adjusted_sell) > parseFloat(b.adjusted_sell) ? 1 : -1);
   }
 
   sortNya(arr){
@@ -202,5 +210,16 @@ export class SalesAnalysisComponent {
       default:
         break;
     }
+  }
+
+  async adjustSale(sale) {
+    var last_sell_date = moment(new Date(sale.last_sell_at)).format("M/D/YYYY");   
+    sale.adjusted_sell = this.caluculateAdjustedSale(this.crypto.bnbPriceBook$.value[last_sell_date], sale.last_sell); 
+  }
+
+  caluculateAdjustedSale(bnbPrice, sell) {
+    var usd = parseFloat(sell) * bnbPrice;
+    var adjusted = usd / this.crypto.bnbPrice$.value;
+    return adjusted;
   }
 }

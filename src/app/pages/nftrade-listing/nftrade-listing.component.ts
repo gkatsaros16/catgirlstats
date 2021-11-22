@@ -79,7 +79,7 @@ export class NFTradeListingComponent {
     1 : (parseFloat(a.price) === parseFloat(b.price)) ? 
     ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
     1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
-    ((a.catgirlDetails.nyaScore < b.catgirlDetails.nyaScore) ? 
+    ((parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
     1 : -1) : -1) : -1);
   }
 

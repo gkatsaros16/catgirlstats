@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { CryptoContextService } from './services/crypto-context.service';
 import { nftadeContextService } from './services/nftrade-context.service'
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { nftadeContextService } from './services/nftrade-context.service'
 
 export class AppComponent {
   isCopied = false;
-  constructor(private nftContext: nftadeContextService, private analytics: AngularFireAnalytics) {}
+  constructor(private nftContext: nftadeContextService, private analytics: AngularFireAnalytics, private crypto: CryptoContextService) {}
   mobile = false;
 
   ngOnInit() {

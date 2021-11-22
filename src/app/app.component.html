@@ -16,6 +16,9 @@
           <li class="nav-item">
             <span class="nav-link clickable" [routerLink]="['/nya-scores']">Nya Scores</span>
           </li>
+          <li class="nav-item">
+            <span class="nav-link clickable" [routerLink]="['/sales-analysis']">Sales Analysis</span>
+          </li>
         </ul>
         <ul *ngIf="mobile" class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -27,11 +30,14 @@
           <li class="nav-item">
             <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/nya-scores']">Nya Scores</span>
           </li>
+          <li class="nav-item">
+            <span class="nav-link clickable" data-bs-toggle="collapse" data-bs-target="#navbarText" [routerLink]="['/sales-analysis']">Sales Analysis</span>
+          </li>
         </ul>
         <span class="navbar-text">
           <span (click)="copyAddress()" class="me-auto" style="font-size: 15px;">
             <span *ngIf="isCopied">Copied! </span>
-            <span *ngIf="!isCopied">Send tip <3 :</span>
+            <span *ngIf="!isCopied">Student loans comming back... Pls donate :( <3 :</span>
               <span class="clickable" style="text-decoration: underline;">
                 0xa119a6F239fEF7b429Fd89C43f0BF227C5C831Cb <i class="ms-1 mt-1 fa fa-copy"></i>
               </span>
@@ -49,7 +55,7 @@
 
     <div class="col-md-4 mb-0 text-muted">
       <div class="row">
-        <span class="text text-muted">RIP Yia Yia <3</span>
+        <span class="text text-muted">Discord: ghoulboy#6699</span>
       </div>
       <div class="row">
         
@@ -68,7 +74,7 @@
 
     <ul class="nav col-md-4 justify-content-end text-muted">
       <div class="d-flex justify-content-center">
-        <small *ngIf="!isCopied">Send CGC or BNB tip to:</small>
+        <small *ngIf="!isCopied">Student loans comming back... Pls donate :( <3</small>
         <small *ngIf="isCopied">Copied! thank you ~</small>
       </div>
       <div (click)="copyAddress()" class="clickable d-flex justify-content-center">

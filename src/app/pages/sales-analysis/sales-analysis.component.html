@@ -1,0 +1,122 @@
+<div *ngIf="!catgirls" class="d-flex justify-content-center" style="display: block;">
+    <div class="spinner-border text-primary" style="height: 4rem;width: 4rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div *ngIf="catgirls" class="row">
+    <div>
+        <small class="text text-muted">
+            <div>
+                *based on last 1000 sales
+            </div> 
+            <div>
+                **removed 5 highest and lowest price for catgirls with more than 50 sales
+            </div> 
+            <div>
+                ***BNB adjusted to reflect today's values
+                <span class="float-end">Range: {{ earliestSale | date:'shortDate'}} - {{ latestSale | date:'shortDate' }}</span>
+            </div>
+        </small>
+    </div>
+    <div class="col-md-12 col-lg-6" *ngFor="let catgirl of catgirls | sort:'desc' : 'rank'">
+        <div class="card clickable" [ngClass]="getBorderHover(catgirl)" (click)="selectCatgirl(catgirl)" style="margin-bottom: 10px;">
+            <div class="card-body">
+                <h5 class="card-title">{{catgirl.name}}<span class="float-end">Sales: {{catgirl.salesAnalysis.count}}</span></h5>
+                <h6>
+                <span class="badge rounded-pill bg-primary">S{{getSeason(catgirl)}} - {{getType(catgirl)}}</span> 
+                <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span> 
+                </h6>
+                <div *ngIf="catgirl.sales.length > 0" class="mb-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <strong>
+                                Nya Averages
+                            </strong> 
+                            <div>
+                                2-25: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya25.count">
+                                    {{catgirl.salesAnalysis.avgNya25.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya25.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya25.count" class="text text-muted">no data</small>
+                            </div>
+                            <div>
+                                26-50: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya50.count">
+                                    {{catgirl.salesAnalysis.avgNya50.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya50.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya50.count" class="text text-muted">no data</small>
+                            </div>
+                            <div>
+                                51-75: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya75.count">
+                                    {{catgirl.salesAnalysis.avgNya75.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya75.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya75.count" class="text text-muted">no data</small>
+                            </div>
+                            <div>
+                                76-99: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya99.count">
+                                    {{catgirl.salesAnalysis.avgNya99.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya99.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya99.count" class="text text-muted">no data</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <strong>Rares Nyas</strong>
+                            <div>
+                                1: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya1.count">
+                                    {{catgirl.salesAnalysis.avgNya1.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya1.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya1.count" class="text text-muted">no data</small>
+                            </div>
+                            <div>
+                                69: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya69.count">
+                                    {{catgirl.salesAnalysis.avgNya69.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya69.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya69.count" class="text text-muted">no data</small>
+                            </div>
+                            <div>
+                                100: 
+                                <span *ngIf="catgirl.salesAnalysis.avgNya100.count">
+                                    {{catgirl.salesAnalysis.avgNya100.mean | number: '1.1-3'}} BNB 
+                                    <small class="text text-muted">
+                                        ({{catgirl.salesAnalysis.avgNya100.count}})
+                                    </small>
+                                </span>
+                                <small *ngIf="!catgirl.salesAnalysis.avgNya100.count" class="text text-muted">no data</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <strong>Average Price</strong>
+                            <div>
+                                Mean: <span *ngIf="catgirl.salesAnalysis.mean">
+                                    {{catgirl.salesAnalysis.mean | number: '1.1-3'}} BNB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,23 +18,7 @@
                 <span class="badge rounded-pill float-end" [ngClass]="getRarityClass(catgirl)">{{getRarity(catgirl)}}</span> 
                 </h6>
                 <h4 class="card-text">{{catgirl.total | number }} | {{catgirl.total / total | percent:'.3'}}</h4>
-                <ng-container *ngIf="!loading">
-                    <div *ngIf="(catgirl.recentListing || catgirl.recentSold || catgirl.averagePrice)" class="row" style="font-size: small;">
-                        <small class="col-xs-2 col-md-4" [ngStyle]="{'visibility': catgirl.recentListing ? '' : 'hidden' }">RL: <span *ngIf="catgirl.recentListing">{{catgirl.recentListing?.price | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
-                        <small class="col-xs-2 col-md-4" [ngStyle]="{'visibility': catgirl.recentSold ? '' : 'hidden' }">RS: <span *ngIf="catgirl.recentSold">{{catgirl.recentSold?.last_sell | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
-                        <small class="col-xs-2 col-md-4" [ngStyle]="{'visibility': catgirl.averagePrice ? '' : 'hidden' }">AP: <span *ngIf="catgirl.averagePrice">{{catgirl.averagePrice?.total / catgirl.averagePrice?.count | number: '1.1-2'}} <span style="font-size: smaller;">BNB</span></span></small>
-                    </div>
-                    <div *ngIf="!(catgirl.recentListing || catgirl.recentSold || catgirl.averagePrice)" class="row" style="font-size: small;">
-                        <small class="text text-muted">No recent trade data nya~ </small>                   
-                    </div>
-                </ng-container>
-                <ng-container  *ngIf="loading">
-                    <small >LOADING... </small>
-                </ng-container>
             </div>
         </div>
     </div>
-</div>
-<div class="text text-muted">
-    <small class="d-flex justify-content-end">RL: Recent Listing | RS: Recent Sold | AP: Average Price</small>
 </div>

@@ -14,6 +14,7 @@ import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics/';
 import { BrowserModule } from '@angular/platform-browser';
 import { NyaScoresComponent } from './pages/nya-scores/nya-scores.component';
 import { ChartsModule } from 'ng2-charts';
+import { SalesAnalysisComponent } from './pages/sales-analysis/sales-analysis.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ChartsModule } from 'ng2-charts';
     HomeComponent,
     CatgirlSearchComponent,
     NFTradeListingComponent,
-    NyaScoresComponent
+    NyaScoresComponent,
+    SalesAnalysisComponent
   ],
   imports: [
     AngularFireModule.initializeApp({

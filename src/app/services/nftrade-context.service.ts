@@ -34,6 +34,7 @@ export class nftadeContextService {
     ) { 
         this.getRecentListings();
         this.getRecentSold();
+        this.getTofuNFT();
     }
 
     getRecentListings() {   
@@ -206,5 +207,9 @@ export class nftadeContextService {
         } else {
             return null;
         }
+    }
+
+    getTofuNFT() {
+
     }
 }

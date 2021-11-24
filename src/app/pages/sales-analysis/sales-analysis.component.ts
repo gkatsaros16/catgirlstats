@@ -4,6 +4,7 @@ import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
 import * as moment from 'moment';
+import { timer } from 'rxjs';
 import { CatgirlContextService } from 'src/app/services/catgirl-context.service';
 import { CryptoContextService } from 'src/app/services/crypto-context.service';
 import { nftadeContextService } from 'src/app/services/nftrade-context.service';
@@ -21,6 +22,8 @@ export class SalesAnalysisComponent {
   earliestSale;
   salesDictionary = {};
   latestSale = new Date();
+  disclaimer = false
+  sub;
 
 
   constructor(
@@ -33,6 +36,9 @@ export class SalesAnalysisComponent {
   ) {}
   
   ngOnInit() {
+    this.sub = timer(10000).subscribe(() => {
+      this.disclaimer = true;
+    });
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
       if (x.length == 1000) {
@@ -221,5 +227,18 @@ export class SalesAnalysisComponent {
     var usd = parseFloat(sell) * bnbPrice;
     var adjusted = usd / this.crypto.bnbPrice$.value;
     return adjusted;
+  }
+
+  getRecentSales(sales) {
+    var copy = [...sales];
+    copy.sort((a,b) => a.last_sell_at > b.last_sell_at ? 1 : -1);
+    if (copy.length > 5) {
+      return copy.slice(Math.max(copy.length - 5, 0)).reverse();
+    }
+    return copy.reverse();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

@@ -44,6 +44,23 @@
     }
 }
 
+@media only screen and (max-width: 550px) {
+    .small-screen-text {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 415px) {
+    .xsmall-screen-text {
+        font-size: 8px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .xxsmall-screen-text {
+        font-size: 5px;
+    }
+}
 
 .common-border:hover {
     box-shadow: 0 0px 5px 0 grey, 0 1px 10px 0 grey, 0 2px 4px -1px grey;

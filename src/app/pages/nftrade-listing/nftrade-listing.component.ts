@@ -27,6 +27,8 @@ let GET_COUNT = gql`
 export class NFTradeListingComponent {
   recentListing$;
   recentListing;
+  recentTofuListing$;
+  recentTofuListing;
 
   mittsyCheck;
   celesteCheck;
@@ -36,13 +38,18 @@ export class NFTradeListingComponent {
   kitaCheck;
   lisaCheck;
   maeCheck;
+  nfTradeCheck = true;
+  tofuNFTCheck;
   sub: Subscription;
   disableSub: Subscription;
   isDisable;
   filter = [];
-  filterCount$;
-  filterCount;
+  filterNfTradeCount$;
+  filterNfTradeCount;
+  filterTofuCount$;
+  filterTofuCount;
   anal
+  listing = 1;
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
@@ -54,14 +61,20 @@ export class NFTradeListingComponent {
 
   ngOnInit() {
     this.titleService.setTitle("Catgirl Stats | NFT Listing")
-    this.sub = timer(500).subscribe(() => {
+    this.sub = timer(1000).subscribe(() => {
       this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
         this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
       });
+      this.recentTofuListing$ = this.nfTradeContext.recentTofuListings$.subscribe( x => {
+        this.recentTofuListing = x;
+      });
     });
 
-    this.filterCount$ = this.nfTradeContext.filterCount$.subscribe(x => {
-      this.filterCount = x
+    this.filterNfTradeCount$ = this.nfTradeContext.filterNfTradeCount$.subscribe(x => {
+      this.filterNfTradeCount = x
+    });
+    this.filterTofuCount$ = this.nfTradeContext.filterTofuCount$.subscribe(x => {
+      this.filterTofuCount = x
     });
   }
 
@@ -81,11 +94,29 @@ export class NFTradeListingComponent {
     1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
     ((parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
     1 : -1) : -1) : -1);
+
+    this.recentTofuListing = 
+    this.nfTradeContext.recentTofuListings$.value.sort((a,b) => 
+    (parseFloat(a.price) > parseFloat(b.price)) ? 
+    1 : (parseFloat(a.price) === parseFloat(b.price)) ? 
+    ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
+    1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
+    ((parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
+    1 : -1) : -1) : -1);
   }
 
   sortHighestNyaDesc() {
     this.recentListing = 
     this.nfTradeContext.recentListings$.value.sort((a,b) => 
+    (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
+    1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? 
+    ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
+    1 : (a.catgirlDetails.rarity === b.catgirlDetails.rarity) ? 
+    ((parseFloat(a.price) > parseFloat(b.price)) ? 
+    1 : -1) : -1) : -1);
+
+    this.recentTofuListing = 
+    this.nfTradeContext.recentTofuListings$.value.sort((a,b) => 
     (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 
     1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? 
     ((a.catgirlDetails.rarity < b.catgirlDetails.rarity) ? 
@@ -99,8 +130,13 @@ export class NFTradeListingComponent {
   }
 
   goToNFT(trade) {
-    this.analytics.logEvent('go_to_nftrade', {tokenID: trade.tokenID})
-    window.open(`https://app.nftrade.com/assets/bsc/0xe796f4b5253a4b3edb4bb3f054c03f147122bacd/${trade.tokenID}`, '_blank');
+    if (trade.type == 2) {
+      this.analytics.logEvent('go_to_tofunft', {tokenID: trade.tokenID});
+      window.open(`https://tofunft.com/nft/bsc/0xE796f4b5253a4b3Edb4Bb3f054c03F147122BACD/${trade.tokenID}`, '_blank');
+    } else {
+      this.analytics.logEvent('go_to_tofunft', {tokenID: trade.tokenID});
+      window.open(`https://app.nftrade.com/assets/bsc/0xe796f4b5253a4b3edb4bb3f054c03f147122bacd/${trade.tokenID}`, '_blank');
+    }
   }
 
   getCatgirlName(catgirlDetails) {
@@ -138,8 +174,31 @@ export class NFTradeListingComponent {
     this.kitaCheck= false;
     this.lisaCheck= false;
     this.maeCheck= false;
+    this.nfTradeCheck = true;
+    this.tofuNFTCheck = false;
+    this.listing = 1;
     this.filter = [];
     this.nfTradeContext.showAllRecentListing();
+  }
+
+  getType(trade) {
+    if (trade.type == 2) {
+      return "TofuNFT"
+    } else {
+      return "Nftrade"
+    }
+  }
+
+  changeListing(value) {
+    if (value == 1) {
+      this.nfTradeCheck = true;
+      this.tofuNFTCheck = false;
+    }
+    if (value == 2) {
+      this.tofuNFTCheck = true;
+      this.nfTradeCheck = false;
+    }
+    this.listing = value;
   }
 
   ngOnDestroy() {

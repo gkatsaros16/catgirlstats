@@ -24,6 +24,7 @@ export class SalesAnalysisComponent {
   latestSale = new Date();
   disclaimer = false
   sub;
+  progress = 50;
 
 
   constructor(
@@ -41,7 +42,8 @@ export class SalesAnalysisComponent {
     });
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
-      if (x.length == 1000) {
+      this.progress = x.length / 10;
+      if (x.length > 975) {
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {

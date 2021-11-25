@@ -25,21 +25,24 @@ let GET_CATGIRL = gql`
 })
 export class nftadeContextService {
     recentListings$ = new BehaviorSubject([]);
+    recentTofuListings$ = new BehaviorSubject([]);
     recentSold$ = new BehaviorSubject([]);
-    filterCount$ = new BehaviorSubject(0);
+    filterNfTradeCount$ = new BehaviorSubject(0);
+    filterTofuCount$ = new BehaviorSubject(0);
     
     constructor(
         private http: HttpClient,
         private apollo: Apollo
     ) { 
         this.getRecentListings();
+        this.getRecentTofuListings();
         this.getRecentSold();
     }
 
     getRecentListings() {   
         this.recentListings$.next([]); 
-        this.filterCount$.next(0); 
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=500&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
+        this.filterNfTradeCount$.next(0); 
+        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=800&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -65,8 +68,48 @@ export class nftadeContextService {
                     if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
                         catgirl.show = true;
                         catgirl.catgirlDetails = result.data.catgirls[0]
-                        this.filterCount$.next(this.filterCount$.value + 1)
+                        catgirl.type = 1;
+                        this.filterNfTradeCount$.next(this.filterNfTradeCount$.value + 1)
                         this.recentListings$.next([...this.recentListings$.value, catgirl])
+                    } else {
+
+                    }
+                });
+            });
+        })
+    }
+
+    getRecentTofuListings() {   
+        this.recentTofuListings$.next([]); 
+        this.filterTofuCount$.next(0); 
+        this.http.get("https://catgirlstats.dev/TofuNFT/GetTofuNFTs").subscribe((x:any[]) => {
+            x.forEach(catgirl => {
+                this.apollo
+                    .watchQuery({
+                    query: GET_CATGIRL,
+                    variables: {
+                        "skip": 0,
+                        "orderDirection": "desc",
+                        "first": 1,
+                        "orderBy": "timestamp",
+                        "where": {
+                        "id": '0x' + parseInt(catgirl.tokenID).toString(16),
+                        "rarity_in": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                        ]
+                        }
+                    }
+                    })
+                    .valueChanges.subscribe((result: any) => {
+                    if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
+                        catgirl.show = true;
+                        catgirl.catgirlDetails = result.data.catgirls[0]
+                        this.filterTofuCount$.next(this.filterTofuCount$.value + 1)
+                        this.recentTofuListings$.next([...this.recentTofuListings$.value, catgirl])
                     } else {
 
                     }
@@ -86,16 +129,35 @@ export class nftadeContextService {
             }
         })
 
-        this.filterCount$.next(count);
+        this.filterNfTradeCount$.next(count);
         this.recentListings$.next(this.recentListings$.value);
+
+        var count = 0;
+        this.recentTofuListings$.value.forEach(x => {
+            if (filterArray.some(y => y.characterId == x.catgirlDetails.characterId && y.rarity == x.catgirlDetails.rarity)) {
+                x.show = true;
+                count++
+            } else {
+                x.show = false;
+            }
+        })
+
+        this.filterTofuCount$.next(count);
+        this.recentTofuListings$.next(this.recentTofuListings$.value);
     }
 
     showAllRecentListing() {   
         this.recentListings$.value.map(x => {
             x.show = true;
         });
-        this.filterCount$.next(this.recentListings$.value.length);
+        this.filterNfTradeCount$.next(this.recentListings$.value.length);
         this.recentListings$.next(this.recentListings$.value);
+
+        this.recentTofuListings$.value.map(x => {
+            x.show = true;
+        });
+        this.filterTofuCount$.next(this.recentTofuListings$.value.length);
+        this.recentTofuListings$.next(this.recentTofuListings$.value);
     }
 
     getRecentSold() {

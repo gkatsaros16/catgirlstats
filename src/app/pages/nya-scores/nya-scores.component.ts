@@ -62,15 +62,12 @@ export class NyaScoresComponent {
 
    // events
    public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
   }
 
   getOptions(values) {
-    console.log(values)
     return {
       responsive: true,
       // We use these empty structures as placeholders for dynamic theming.

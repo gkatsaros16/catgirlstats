@@ -17,7 +17,7 @@
             <input [(ngModel)]="hanaCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 2, characterId: 0})" type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck4">Hana</label>
         </div>
-        <div class="col-sm-12 btn-group d-flex justify-content-center" role="group">
+        <div class="mb-2 col-sm-12 btn-group d-flex justify-content-center" role="group">
             <input [(ngModel)]="aoiCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 1, characterId: 1})" type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck5">Aoi</label>
             <input [(ngModel)]="kitaCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 1, characterId: 0})" type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
@@ -26,6 +26,12 @@
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck7">Lisa</label>          
             <input [(ngModel)]="maeCheck" [disabled]="isDisable"  (click)="applyFilter({rarity: 0, characterId: 0})" type="checkbox" class="btn-check" id="btncheck8" autocomplete="off">
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck8">Mae</label>
+        </div>       
+        <div class="col-sm-12 btn-group d-flex justify-content-center" role="group">
+            <input [(ngModel)]="nfTradeCheck" [disabled]="isDisable" selected (click)="changeListing(1)" type="checkbox" class="btn-check" id="btncheck9" autocomplete="off">
+            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck9">NfTrade</label>
+            <input [(ngModel)]="tofuNFTCheck" [disabled]="isDisable"  (click)="changeListing(2)" type="checkbox" class="btn-check" id="btncheck10" autocomplete="off">
+            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck10">TofuNFT</label>
         </div>       
     </div>
 
@@ -37,23 +43,43 @@
 
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-center">
-            <span *ngIf="recentListing?.length">Listing: {{filterCount}}</span>
+            <span class="me-2" *ngIf="recentListing?.length">NfTrade: {{filterNfTradeCount}} \ 800</span>
+            <span *ngIf="recentListing?.length">Tofu: {{filterTofuCount}} \ 1000</span>
         </div>
     </div>
 
     <ng-container *ngFor="let trade of recentListing">
-        <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
-            <div (click)="goToNFT(trade)" class="card mb-3 clickable hover-border">
-                <div class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}<span class="float-end mt-1" style="font-size: 12px;">{{trade.contractName}} <i class="fa fa-external-link"></i></span></h5>
-                    <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>           
-                    <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
-                    <div>
-                        <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
-                        <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
+        <ng-container *ngIf="listing == 1">
+            <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div (click)="goToNFT(trade)" class="card mb-3 clickable hover-border">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}<span class="float-end mt-1" style="font-size: 12px;">{{getType(trade)}} <i class="fa fa-external-link"></i></span></h5>
+                        <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}</h5>           
+                        <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
+                        <div>
+                            <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
+                            <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngFor="let trade of recentTofuListing">
+        <ng-container *ngIf="listing == 2">
+            <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div (click)="goToNFT(trade)" class="card mb-3 clickable hover-border">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted">{{ getCatgirlName(trade.catgirlDetails) }}<span class="float-end mt-1" style="font-size: 12px;">{{getType(trade)}} <i class="fa fa-external-link"></i></span></h5>
+                        <h5 class="card-subtitle mb-2 text-muted">#{{trade.tokenID}}<span *ngIf="trade.sellType == 'auction'" class="text-muted float-end" style="font-size: 12px;">Auction</span> </h5>                                           
+                        <span class="card-subtitle mb-2 text-muted" style="font-size: small;">{{ trade.listedAt | date:'short' }}</span>           
+                        <div>
+                            <span class="float-left">{{ trade.catgirlDetails.nyaScore }} Nya</span>
+                            <span class="float-end">{{ trade.price | number:'1.1-3' }} BNB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </ng-container>
 </div>

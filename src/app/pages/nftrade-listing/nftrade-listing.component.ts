@@ -48,8 +48,8 @@ export class NFTradeListingComponent {
   filterNfTradeCount;
   filterTofuCount$;
   filterTofuCount;
-  anal
   listing = 1;
+  
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
@@ -127,6 +127,7 @@ export class NFTradeListingComponent {
 
   sortRecentlyListed() {
     this.recentListing = this.nfTradeContext.recentListings$.value.sort((a,b) => (a.listedAt < b.listedAt) ? 1 :  -1);
+    this.recentTofuListing = this.nfTradeContext.recentTofuListings$.value.sort((a,b) => (a.listedAt < b.listedAt) ? 1 :  -1);
   }
 
   goToNFT(trade) {
@@ -157,6 +158,14 @@ export class NFTradeListingComponent {
     } else {
       this.nfTradeContext.showAllRecentListing();
     }
+  }
+
+  toggleAuction() {
+    this.nfTradeContext.recentTofuListings$.value.forEach(x => {
+      if (x.sellType == 'auction') {
+        x.show = false;
+      }
+    })
   }
 
   refreshListing() {

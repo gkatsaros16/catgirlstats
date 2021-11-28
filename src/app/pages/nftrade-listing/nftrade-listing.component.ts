@@ -28,7 +28,7 @@ export class NFTradeListingComponent {
   recentListing$;
   recentListing;
   recentTofuListing$;
-  recentTofuListing;
+  recentTofuListing = [];
 
   mittsyCheck;
   celesteCheck;
@@ -38,8 +38,8 @@ export class NFTradeListingComponent {
   kitaCheck;
   lisaCheck;
   maeCheck;
-  nfTradeCheck = true;
-  tofuNFTCheck;
+  // nfTradeCheck = true;
+  tofuNFTCheck = true;
   sub: Subscription;
   disableSub: Subscription;
   isDisable;
@@ -48,7 +48,8 @@ export class NFTradeListingComponent {
   filterNfTradeCount;
   filterTofuCount$;
   filterTofuCount;
-  listing = 1;
+  listing = 2;
+  showAuction = true;
   
   constructor(
     private apollo: Apollo,
@@ -61,10 +62,10 @@ export class NFTradeListingComponent {
 
   ngOnInit() {
     this.titleService.setTitle("Catgirl Stats | NFT Listing")
-    this.sub = timer(1000).subscribe(() => {
-      this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
-        this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
-      });
+    this.sub = timer(500).subscribe(() => {
+      // this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
+      //   this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
+      // });
       this.recentTofuListing$ = this.nfTradeContext.recentTofuListings$.subscribe( x => {
         this.recentTofuListing = x;
       });
@@ -161,9 +162,10 @@ export class NFTradeListingComponent {
   }
 
   toggleAuction() {
+    this.showAuction = !this.showAuction
     this.nfTradeContext.recentTofuListings$.value.forEach(x => {
       if (x.sellType == 'auction') {
-        x.show = false;
+        x.show = this.showAuction;
       }
     })
   }
@@ -183,7 +185,7 @@ export class NFTradeListingComponent {
     this.kitaCheck= false;
     this.lisaCheck= false;
     this.maeCheck= false;
-    this.nfTradeCheck = true;
+    // this.nfTradeCheck = true;
     this.tofuNFTCheck = false;
     this.listing = 1;
     this.filter = [];
@@ -200,12 +202,12 @@ export class NFTradeListingComponent {
 
   changeListing(value) {
     if (value == 1) {
-      this.nfTradeCheck = true;
+      // this.nfTradeCheck = true;
       this.tofuNFTCheck = false;
     }
     if (value == 2) {
       this.tofuNFTCheck = true;
-      this.nfTradeCheck = false;
+      // this.nfTradeCheck = false;
     }
     this.listing = value;
   }

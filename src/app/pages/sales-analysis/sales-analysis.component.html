@@ -3,9 +3,12 @@
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width]="progress + '%'"></div>
     </div>
 </div>
-<div *ngIf="!catgirls && disclaimer" class="d-flex justify-content-center" style="display: block;">
-    <small>Data relies on catgirls graphQL, if page is not loading try refreshing.</small>
+<div class="d-flex justify-content-center" style="display: block;">
+    NfTrade recently changed their API so i no longer have access. I'm working on a solution :) 
 </div>
+<!-- <div *ngIf="!catgirls && disclaimer" class="d-flex justify-content-center" style="display: block;">
+    <small>Data relies on catgirls graphQL, if page is not loading try refreshing.</small>
+</div> -->
 
 <div *ngIf="catgirls" class="row">
     <div>

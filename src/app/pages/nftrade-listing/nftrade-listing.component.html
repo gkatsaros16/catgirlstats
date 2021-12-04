@@ -28,10 +28,10 @@
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck8">Mae</label>
         </div>       
         <div class="mb-2 col-sm-12 btn-group d-flex justify-content-center" role="group">
-            <!-- <input [(ngModel)]="nfTradeCheck" [disabled]="isDisable" selected (click)="changeListing(1)" type="checkbox" class="btn-check" id="btncheck9" autocomplete="off">
-            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck9">NfTrade</label> -->
-            <!-- <input [disabled]="isDisable" selected type="checkbox" class="btn-check" id="btncheck10" autocomplete="off">
-            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck10">TofuNFT</label> -->
+            <input [(ngModel)]="nfTradeCheck" [disabled]="isDisable" (click)="changeListing(1)" type="checkbox" class="btn-check" id="btncheck9" autocomplete="off">
+            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck9">NfTrade</label>
+            <input [(ngModel)]="tofuNFTCheck" [disabled]="isDisable" selected type="checkbox" class="btn-check" (click)="changeListing(2)" id="btncheck10" autocomplete="off">
+            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck10">TofuNFT</label>
         </div>   
         <div *ngIf="tofuNFTCheck" class="col-sm-12 btn-group d-flex justify-content-center" role="group">
             <button class="btn btn-outline-primary" style="max-width: 100px; min-width: 100px; font-size: 12px;" [disabled]="isDisable" (click)="toggleAuction()" type="checkbox" autocomplete="off">
@@ -40,20 +40,14 @@
         </div>       
     </div>
 
-    <!-- <div class="row">
-        <div class="col-sm-12 d-flex justify-content-center">
-            <span *ngIf="recentListing?.length">Promoted Trades: {{filterCount}}</span>
-        </div>
-    </div> -->
-
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-center">
-            <span class="me-2" *ngIf="recentListing?.length">NfTrade: {{filterNfTradeCount}} \ 800</span>
+            <span class="me-2">NfTrade: {{filterNfTradeCount}} \ 100</span>
             <span>Tofu: {{filterTofuCount}} \ 1000</span>
         </div>
     </div>
 
-    <!-- <ng-container *ngFor="let trade of recentListing">
+    <ng-container *ngFor="let trade of recentListing">
         <ng-container *ngIf="listing == 1">
             <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div (click)="goToNFT(trade)" class="card mb-3 clickable hover-border">
@@ -69,7 +63,7 @@
                 </div>
             </div>
         </ng-container>
-    </ng-container> -->
+    </ng-container>
     <ng-container *ngFor="let trade of recentTofuListing">
         <ng-container *ngIf="listing == 2">
             <div *ngIf="trade.show" class="col-sm-6 col-md-4 col-lg-3 col-xl-2">

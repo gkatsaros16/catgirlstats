@@ -61,10 +61,10 @@
             <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">Recent Sold <span class="text-muted float-end">{{ recentNFTSold?.last_sell_at | date:'short'}}</span></h6>
+                        <h6 class="card-subtitle mb-2">Recent Sold <span class="text-muted float-end">{{ recentNFTSold?.last_Sell_At | date:'short'}}</span></h6>
                         <div *ngIf="recentNFTSold != null">
                             <div class="row">
-                                <div class="col-sm-6">Price: {{ recentNFTSold?.last_sell }} BNB</div>
+                                <div class="col-sm-6">Price: {{ recentNFTSold?.last_Sell }} BNB</div>
                                 <div class="col-sm-6">Nya Score: {{ recentNFTSold?.catgirlDetails?.nyaScore }}</div>                           
                             </div>
                         </div>
@@ -78,10 +78,10 @@
             <!-- <div class="col-sm-12">
                 <div class="card mb-1" style="width: 100%;">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">Recent Highest Sold<span class="text-muted float-end">{{ recentHighestNFTSold?.last_sell_at | date:'short'}}</span></h6>
+                        <h6 class="card-subtitle mb-2">Recent Highest Sold<span class="text-muted float-end">{{ recentHighestNFTSold?.last_Sell_At | date:'short'}}</span></h6>
                         <div *ngIf="recentNFTSold">
                             <div class="row">
-                                <div class="col-sm-6">Price: {{ recentHighestNFTSold?.last_sell }} BNB</div>
+                                <div class="col-sm-6">Price: {{ recentHighestNFTSold?.last_Sell }} BNB</div>
                                 <div class="col-sm-6">Nya Score: {{ recentHighestNFTSold?.catgirlDetails?.nyaScore }}</div>                           
                             </div>
                         </div>
@@ -99,10 +99,10 @@
                             <h6 class="card-subtitle mb-2">Nya Score Sold</h6>
                             <div *ngIf="recentAveragePrice" class="row">
                                 <div class="col-sm-6"> 
-                                    Highest: {{ highestNya?.catgirlDetails?.nyaScore}} @ {{ highestNya?.last_sell }} BNB
+                                    Highest: {{ highestNya?.catgirlDetails?.nyaScore}} @ {{ highestNya?.last_Sell }} BNB
                                 </div> 
                                 <div class="col-sm-6"> 
-                                    Lowest: {{ lowestNya?.catgirlDetails?.nyaScore}} @ {{ lowestNya?.last_sell }} BNB
+                                    Lowest: {{ lowestNya?.catgirlDetails?.nyaScore}} @ {{ lowestNya?.last_Sell }} BNB
                                 </div> 
                             </div>
                             <div *ngIf="!recentAveragePrice" class="row">

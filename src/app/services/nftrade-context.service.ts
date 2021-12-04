@@ -34,15 +34,17 @@ export class nftadeContextService {
         private http: HttpClient,
         private apollo: Apollo
     ) { 
-        this.getRecentListings();
         this.getRecentTofuListings();
+        this.getRecentListings();
         this.getRecentSold();
     }
 
-    getRecentListings() {   
+    getRecentListings() {  
+        console.log('oop') 
         this.recentListings$.next([]); 
         this.filterNfTradeCount$.next(0); 
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=800&skip=0&search=catgirl&order=&verified=&sort=listed_desc").subscribe((x:any[]) => {
+        this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeListing").subscribe((x:any[]) => {
+            console.log(x)
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -161,7 +163,7 @@ export class nftadeContextService {
     }
 
     getRecentSold() {
-        this.http.get("https://api.nftrade.com/api/v1/tokens?limit=1000&skip=0&search=catgirl&order=&verified=&sort=sold_desc").subscribe((x:any[]) => {
+        this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeSales").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -196,9 +198,9 @@ export class nftadeContextService {
     }
 
     getRecentNFTListing(id:any) {
-        if (!this.recentListings$.value) {
-            this.getRecentListings();
-        }
+        // if (!this.recentListings$.value) {
+        //     this.getRecentListings();
+        // }
         var recent = this.recentListings$.value;
         if (recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             return recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
@@ -208,12 +210,12 @@ export class nftadeContextService {
     }
 
     getRecentNFTSold(id:any) {
-        if (!this.recentSold$.value) {
-            this.getRecentSold();
-        }
+        // if (!this.recentSold$.value) {
+        //     this.getRecentSold();
+        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
-            var sorted = recentSold.sort((a,b) => (a.last_sell_at < b.last_sell_at) ? 1 : -1);
+            var sorted = recentSold.sort((a,b) => (a.last_Sell_At < b.last_Sell_At) ? 1 : -1);
             return sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
         } else {
             return null
@@ -221,13 +223,13 @@ export class nftadeContextService {
     }
 
     getRecentHighestNFTSold(id:any) {
-        if (!this.recentSold$.value) {
-            this.getRecentSold();
-        }
+        // if (!this.recentSold$.value) {
+        //     this.getRecentSold();
+        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
-            var sorted = filter.sort((a,b) => (parseFloat(a.last_sell) < parseFloat(b.last_sell)) ? 1 : -1);
+            var sorted = filter.sort((a,b) => (parseFloat(a.last_Sell) < parseFloat(b.last_Sell)) ? 1 : -1);
             return sorted.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
         } else {
             return null
@@ -236,14 +238,14 @@ export class nftadeContextService {
 
     getRecentAveragePrice(id:any) {
         var totalPrice = 0;
-        if ((this.recentSold$.value.length == 0)) {
-            this.getRecentSold();
-        }
+        // if ((this.recentSold$.value.length == 0)) {
+        //     this.getRecentSold();
+        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var recentAveragePriceArray = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
             recentAveragePriceArray.forEach(trans => {
-            totalPrice += parseFloat(trans.last_sell);
+            totalPrice += parseFloat(trans.last_Sell);
             });
 
             return {
@@ -256,13 +258,13 @@ export class nftadeContextService {
     }
 
     getNyaScore (id:any) {
-        if ((this.recentSold$.value.length == 0)) {
-            this.getRecentSold();
-        }
+        // if ((this.recentSold$.value.length == 0)) {
+        //     this.getRecentSold();
+        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
-            var sorted = filter.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((parseFloat(a.catgirlDetails.last_sell) > parseFloat(b.catgirlDetails.last_sell)) ? 1 : -1) : -1 );
+            var sorted = filter.sort((a,b) => (parseInt(a.catgirlDetails.nyaScore) < parseInt(b.catgirlDetails.nyaScore)) ? 1 : (a.catgirlDetails.nyaScore === b.catgirlDetails.nyaScore) ? ((parseFloat(a.catgirlDetails.last_Sell) > parseFloat(b.catgirlDetails.last_Sell)) ? 1 : -1) : -1 );
             var lowest = sorted.filter(x => x.catgirlDetails.nyaScore == sorted[sorted.length - 1].catgirlDetails.nyaScore);
             return [sorted[0], lowest[lowest.length -1]]
         } else {

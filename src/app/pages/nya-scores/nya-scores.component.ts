@@ -90,26 +90,6 @@ export class NyaScoresComponent {
     };
   }
 
-  // getDataSet(data) {
-  //   var res = []
-  //   var sort = data.nyaScores.sort((a,b) => parseInt(a.catgirlNyaScore) < parseInt(b.catgirlNyaScore) ? 1 : -1);
-  //   sort.forEach(x => {
-  //     res.push(x.count)
-  //   });
-  //   console.log("Data", res, data.id);
-  //   return [{data: res}];
-  // }
-
-  // getLabels(data) {
-  //   var res = []
-  //   var sort = data.nyaScores.sort((a,b) => parseInt(a.catgirlNyaScore) < parseInt(b.catgirlNyaScore) ? 1 : -1);
-  //   sort.forEach(x => {
-  //     res.push(x.catgirlNyaScore.toString())
-  //   });
-  //   console.log("Labels", res, data.id);
-  //   return res;
-  // }
-
   ngOnDestroy() {
 
   }

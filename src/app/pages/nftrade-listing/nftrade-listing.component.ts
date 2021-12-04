@@ -1,5 +1,4 @@
 
-import { XhrFactory } from '@angular/common';
 import { Component } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Title } from '@angular/platform-browser';
@@ -38,7 +37,7 @@ export class NFTradeListingComponent {
   kitaCheck;
   lisaCheck;
   maeCheck;
-  // nfTradeCheck = true;
+  nfTradeCheck = false;
   tofuNFTCheck = true;
   sub: Subscription;
   disableSub: Subscription;
@@ -63,11 +62,11 @@ export class NFTradeListingComponent {
   ngOnInit() {
     this.titleService.setTitle("Catgirl Stats | NFT Listing")
     this.sub = timer(500).subscribe(() => {
-      // this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
-      //   this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
-      // });
       this.recentTofuListing$ = this.nfTradeContext.recentTofuListings$.subscribe( x => {
         this.recentTofuListing = x;
+      });
+      this.recentListing$ = this.nfTradeContext.recentListings$.subscribe( x => {
+        this.recentListing = x.sort((a,b) => (a.listedAt < b.listedAt) ? 1 : -1);
       });
     });
 
@@ -173,6 +172,7 @@ export class NFTradeListingComponent {
   refreshListing() {
     this.disable();
     this.clear();
+    this.nfTradeContext.getRecentTofuListings();
     this.nfTradeContext.getRecentListings();
   }
 
@@ -185,7 +185,7 @@ export class NFTradeListingComponent {
     this.kitaCheck= false;
     this.lisaCheck= false;
     this.maeCheck= false;
-    // this.nfTradeCheck = true;
+    this.nfTradeCheck = true;
     this.tofuNFTCheck = false;
     this.listing = 1;
     this.filter = [];
@@ -202,12 +202,12 @@ export class NFTradeListingComponent {
 
   changeListing(value) {
     if (value == 1) {
-      // this.nfTradeCheck = true;
+      this.nfTradeCheck = true;
       this.tofuNFTCheck = false;
     }
     if (value == 2) {
       this.tofuNFTCheck = true;
-      // this.nfTradeCheck = false;
+      this.nfTradeCheck = false;
     }
     this.listing = value;
   }

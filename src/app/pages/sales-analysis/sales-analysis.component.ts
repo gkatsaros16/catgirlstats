@@ -43,7 +43,7 @@ export class SalesAnalysisComponent {
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
       this.progress = x.length / 10;
-      if (x.length > 975) {
+      if (x.length == 100) {
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {
@@ -53,9 +53,9 @@ export class SalesAnalysisComponent {
               }
             })
             if (!this.earliestSale) {
-              this.earliestSale = x.last_sell_at;
+              this.earliestSale = x.last_Sell_At;
             } else {
-              this.earliestSale = this.earliestSale < x.last_sell_at ? this.earliestSale : x.last_sell_at;
+              this.earliestSale = this.earliestSale < x.last_Sell_At ? this.earliestSale : x.last_Sell_At;
             }
           })
           this.context.CATGIRLS.forEach(x => {
@@ -111,9 +111,12 @@ export class SalesAnalysisComponent {
   };
 
   getQuantile = (sortedArr, q) => {
+    if (sortedArr.length > 4) {
       const pos = (sortedArr.length - 1) * q;
       const base = Math.floor(pos);
       return sortedArr[base].adjusted_sell;
+    }
+    return 0;
   };
 
   q25(arr){
@@ -221,8 +224,8 @@ export class SalesAnalysisComponent {
   }
 
   async adjustSale(sale) {
-    var last_sell_date = moment(new Date(sale.last_sell_at)).format("M/D/YYYY");   
-    sale.adjusted_sell = this.caluculateAdjustedSale(this.crypto.bnbPriceBook$.value[last_sell_date], sale.last_sell); 
+    var last_sell_date = moment(new Date(sale.last_Sell_At)).format("M/D/YYYY");   
+    sale.adjusted_sell = this.caluculateAdjustedSale(this.crypto.bnbPriceBook$.value[last_sell_date], sale.last_Sell); 
   }
 
   caluculateAdjustedSale(bnbPrice, sell) {
@@ -233,7 +236,7 @@ export class SalesAnalysisComponent {
 
   getRecentSales(sales) {
     var copy = [...sales];
-    copy.sort((a,b) => a.last_sell_at > b.last_sell_at ? 1 : -1);
+    copy.sort((a,b) => a.last_Sell_At > b.last_Sell_At ? 1 : -1);
     if (copy.length > 5) {
       return copy.slice(Math.max(copy.length - 5, 0)).reverse();
     }

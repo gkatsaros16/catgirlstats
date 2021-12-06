@@ -15,6 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NyaScoresComponent } from './pages/nya-scores/nya-scores.component';
 import { ChartsModule } from 'ng2-charts';
 import { SalesAnalysisComponent } from './pages/sales-analysis/sales-analysis.component';
+import { SupportComponent } from './pages/support/support.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SalesAnalysisComponent } from './pages/sales-analysis/sales-analysis.co
     CatgirlSearchComponent,
     NFTradeListingComponent,
     NyaScoresComponent,
-    SalesAnalysisComponent
+    SalesAnalysisComponent,
+    SupportComponent
   ],
   imports: [
     AngularFireModule.initializeApp({

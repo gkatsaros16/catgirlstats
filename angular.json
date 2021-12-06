@@ -117,10 +117,5 @@
       }
     }
   },
-  "defaultProject": "catgirl-stats2",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  }
+  "defaultProject": "catgirl-stats2"
 }

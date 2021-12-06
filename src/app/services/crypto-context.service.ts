@@ -29,7 +29,8 @@ export class CryptoContextService {
   }
 
   getCryptoPricesForLast16days() {
-    for (let index = 0; index < 20; index++) {
+    //needs refactor to one db call lol...
+    for (let index = 0; index < 30; index++) {
         var date = moment().subtract(index, "days").format("M/D/YYYY");
         this.http.get("https://catgirlstats.dev/bnb/GetBNBPriceForDate?date="+date).subscribe(x => {
             var date = moment().subtract(this.bnbPriceBook$.value.count, "days").format("M/D/YYYY");

@@ -42,8 +42,8 @@ export class SalesAnalysisComponent {
     });
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
-      this.progress = x.length / 10;
-      if (x.length == 100) {
+      this.progress = x.length
+      if (x.length == 500) {
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {

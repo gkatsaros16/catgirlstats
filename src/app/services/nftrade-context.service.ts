@@ -40,11 +40,9 @@ export class nftadeContextService {
     }
 
     getRecentListings() {  
-        console.log('oop') 
         this.recentListings$.next([]); 
         this.filterNfTradeCount$.next(0); 
         this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeListing").subscribe((x:any[]) => {
-            console.log(x)
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -163,7 +161,7 @@ export class nftadeContextService {
     }
 
     getRecentSold() {
-        this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeSales").subscribe((x:any[]) => {
+        this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeSales500").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({

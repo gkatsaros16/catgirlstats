@@ -45,7 +45,7 @@ import { SupportComponent } from './pages/support/support.component';
     BrowserModule,
     AppRoutingModule,
     GraphQLModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [SortPipe],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import { CatgirlSearchComponent } from './pages/catgirl-search/catgirl-search.co
 import { NFTradeListingComponent } from './pages/nftrade-listing/nftrade-listing.component';
 import { NyaScoresComponent } from './pages/nya-scores/nya-scores.component';
 import { SalesAnalysisComponent } from './pages/sales-analysis/sales-analysis.component';
+import { SupportComponent } from './pages/support/support.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'sales-analysis',
     component: SalesAnalysisComponent,
+  },
+  {
+    path: 'support',
+    component: SupportComponent,
   },
 ];
 

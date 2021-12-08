@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import Web3 from 'web3/dist/web3.min.js'
 declare let window:any;
 
@@ -18,17 +19,19 @@ export class SupportComponent {
   error;
   success;
   messageSuccess;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public analytics: AngularFireAnalytics) {
 
   }
   
   ngOnInit() {
+    this.analytics.logEvent('go_to_support');
     this.getAccount()
   }
 
   async connectWallet() {
     if (window.ethereum) {
       await window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
+        this.analytics.logEvent('connected_wallet');
         this.error = "";
         this.getAccount()
       });
@@ -40,6 +43,7 @@ export class SupportComponent {
   }
 
   sendTransaction(value) {
+    this.analytics.logEvent('send_transation', {value: value});
     if (!this.fromAddress) {
       return this.error = "Please connect wallet to continue!"
     }

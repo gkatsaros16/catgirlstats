@@ -81,4 +81,34 @@
 .hover-border:hover {
     box-shadow: 0 0px 5px 0 rgb(13,110,253), 0 1px 10px 0 rgb(13,110,253), 0 2px 4px -1px rgb(13,110,253);
 }
+
+.pulse {
+    -webkit-animation: color_change 5s infinite alternate;
+    -moz-animation: color_change 5s infinite alternate;
+    -ms-animation: color_change 5s infinite alternate;
+    -o-animation: color_change 5s infinite alternate;
+    animation: color_change 5s infinite alternate;
+   }
+   
+   @-webkit-keyframes color_change {
+    from { color: lightpink; }
+    to { color: white; }
+   }
+   @-moz-keyframes color_change {
+    from { color: lightpink; }
+    to { color: white; }
+   }
+   @-ms-keyframes color_change {
+    from { color: lightpink; }
+    to { color: white; }
+   }
+   @-o-keyframes color_change {
+    from { color: lightpink; }
+    to { color: white; }
+   }
+   @keyframes color_change {
+    from { color: lightpink; }
+    to { color: white; }
+   }
+
     

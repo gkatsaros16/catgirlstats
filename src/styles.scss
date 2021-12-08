@@ -83,11 +83,11 @@
 }
 
 .pulse {
-    -webkit-animation: color_change 5s infinite alternate;
-    -moz-animation: color_change 5s infinite alternate;
-    -ms-animation: color_change 5s infinite alternate;
-    -o-animation: color_change 5s infinite alternate;
-    animation: color_change 5s infinite alternate;
+    -webkit-animation: color_change 3s infinite alternate;
+    -moz-animation: color_change 3s infinite alternate;
+    -ms-animation: color_change 3s infinite alternate;
+    -o-animation: color_change 3s infinite alternate;
+    animation: color_change 3s infinite alternate;
    }
    
    @-webkit-keyframes color_change {

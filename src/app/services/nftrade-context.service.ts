@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
+import moment from 'moment';
 let GET_CATGIRL = gql`
         query GetCatgirls($first: Int, $skip: Int = 0, $orderBy: String, $orderDirection: String = asc, $where: Catgirl_filter) {
           catgirls(
@@ -27,7 +28,6 @@ export class nftadeContextService {
     recentListings$ = new BehaviorSubject([]);
     recentTofuListings$ = new BehaviorSubject([]);
     recentSold$ = new BehaviorSubject([]);
-    recentTofuSold$ = new BehaviorSubject([]);
     filterNfTradeCount$ = new BehaviorSubject(0);
     filterTofuCount$ = new BehaviorSubject(0);
     
@@ -37,7 +37,6 @@ export class nftadeContextService {
     ) { 
         this.getRecentTofuListings();
         this.getRecentListings();
-        this.getRecentTofuSold();
         this.getRecentSold();
     }
 
@@ -195,10 +194,8 @@ export class nftadeContextService {
                 });
             });
         })
-    }
 
-    getRecentTofuSold() {
-        this.http.get("https://localhost:4200/TofuNFT/GetTofuNFTSales").subscribe((x:any[]) => {
+        this.http.get("https://catgirlstats.dev/TofuNFT/GetTofuNFTSales").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo
                     .watchQuery({
@@ -222,8 +219,9 @@ export class nftadeContextService {
                     })
                     .valueChanges.subscribe((result: any) => {
                     if (result.data.catgirls[0]) {
+                        catgirl.last_Sell_At = moment(new Date(parseInt(catgirl.last_Sell_At) * 1000)).format("M/D/YYYY")
                         catgirl.catgirlDetails = result.data.catgirls[0]
-                        this.recentTofuSold$.next([...this.recentTofuSold$.value, catgirl])
+                        this.recentSold$.next([...this.recentSold$.value, catgirl])
                     } else {
 
                     }

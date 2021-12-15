@@ -43,33 +43,7 @@ export class SalesAnalysisComponent {
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
       this.progress = x.length
-      if (x.length == 500) {
-        if (!this.context.salesAnalysisSet$.value) {
-          x.map(x => {
-            this.context.CATGIRLS.map(y => {
-              if (y.id == (x.catgirlDetails.rarity + ':' + x.catgirlDetails.characterId)) {
-                this.adjustSale(x);
-                y.sales.push(x);
-              }
-            })
-            if (!this.earliestSale) {
-              this.earliestSale = x.last_Sell_At;
-            } else {
-              this.earliestSale = this.earliestSale < x.last_Sell_At ? this.earliestSale : x.last_Sell_At;
-            }
-          })
-          this.context.CATGIRLS.forEach(x => {
-            x['salesAnalysis'] = this.getQuartiles(x.sales)
-          });
-        }
-        this.catgirls = this.context.CATGIRLS;
-        this.context.salesAnalysisSet$.next(true);
-      }
-    })
-
-    this.nfTradeContext.recentTofuSold$.subscribe(x => {
-      this.progress = x.length
-      if (x.length == 1000) {
+      if (x.length == 1500) {
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {

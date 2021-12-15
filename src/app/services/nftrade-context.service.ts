@@ -27,6 +27,7 @@ export class nftadeContextService {
     recentListings$ = new BehaviorSubject([]);
     recentTofuListings$ = new BehaviorSubject([]);
     recentSold$ = new BehaviorSubject([]);
+    recentTofuSold$ = new BehaviorSubject([]);
     filterNfTradeCount$ = new BehaviorSubject(0);
     filterTofuCount$ = new BehaviorSubject(0);
     
@@ -36,6 +37,7 @@ export class nftadeContextService {
     ) { 
         this.getRecentTofuListings();
         this.getRecentListings();
+        this.getRecentTofuSold();
         this.getRecentSold();
     }
 
@@ -195,10 +197,42 @@ export class nftadeContextService {
         })
     }
 
+    getRecentTofuSold() {
+        this.http.get("https://localhost:4200/TofuNFT/GetTofuNFTSales").subscribe((x:any[]) => {
+            x.forEach(catgirl => {
+                this.apollo
+                    .watchQuery({
+                    query: GET_CATGIRL,
+                    variables: {
+                        "skip": 0,
+                        "orderDirection": "desc",
+                        "first": 1,
+                        "orderBy": "timestamp",
+                        "where": {
+                        "id": '0x' + parseInt(catgirl.tokenID).toString(16),
+                        "rarity_in": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                        ]
+                        }
+                    }
+                    })
+                    .valueChanges.subscribe((result: any) => {
+                    if (result.data.catgirls[0]) {
+                        catgirl.catgirlDetails = result.data.catgirls[0]
+                        this.recentTofuSold$.next([...this.recentTofuSold$.value, catgirl])
+                    } else {
+
+                    }
+                });
+            });
+        })
+    }
+
     getRecentNFTListing(id:any) {
-        // if (!this.recentListings$.value) {
-        //     this.getRecentListings();
-        // }
         var recent = this.recentListings$.value;
         if (recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             return recent.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
@@ -208,9 +242,6 @@ export class nftadeContextService {
     }
 
     getRecentNFTSold(id:any) {
-        // if (!this.recentSold$.value) {
-        //     this.getRecentSold();
-        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var sorted = recentSold.sort((a,b) => (a.last_Sell_At < b.last_Sell_At) ? 1 : -1);
@@ -221,9 +252,6 @@ export class nftadeContextService {
     }
 
     getRecentHighestNFTSold(id:any) {
-        // if (!this.recentSold$.value) {
-        //     this.getRecentSold();
-        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
@@ -236,9 +264,6 @@ export class nftadeContextService {
 
     getRecentAveragePrice(id:any) {
         var totalPrice = 0;
-        // if ((this.recentSold$.value.length == 0)) {
-        //     this.getRecentSold();
-        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var recentAveragePriceArray = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);
@@ -256,9 +281,6 @@ export class nftadeContextService {
     }
 
     getNyaScore (id:any) {
-        // if ((this.recentSold$.value.length == 0)) {
-        //     this.getRecentSold();
-        // }
         var recentSold = this.recentSold$.value;
         if (recentSold.find(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id)) {
             var filter = recentSold.filter(x => `${x.catgirlDetails.rarity}:${x.catgirlDetails.characterId}` == id);

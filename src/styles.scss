@@ -83,6 +83,7 @@
 }
 
 .pulse {
+    -webkit-text-stroke: .1px black;
     -webkit-animation: color_change 3s infinite alternate;
     -moz-animation: color_change 3s infinite alternate;
     -ms-animation: color_change 3s infinite alternate;
@@ -91,24 +92,24 @@
    }
    
    @-webkit-keyframes color_change {
-    from { color: lightpink; }
-    to { color: white; }
+    from { color: grey; }
+    to { color: hotpink; }
    }
    @-moz-keyframes color_change {
-    from { color: lightpink; }
-    to { color: white; }
+    from { color: grey; }
+    to { color: hotpink; }
    }
    @-ms-keyframes color_change {
-    from { color: lightpink; }
-    to { color: white; }
+    from { color: grey; }
+    to { color: hotpink; }
    }
    @-o-keyframes color_change {
-    from { color: lightpink; }
-    to { color: white; }
+    from { color: grey; }
+    to { color: hotpink; }
    }
    @keyframes color_change {
-    from { color: lightpink; }
-    to { color: white; }
+    from { color: grey; }
+    to { color: hotpink; }
    }
 
     

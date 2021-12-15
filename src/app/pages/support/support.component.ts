@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Title } from '@angular/platform-browser';
 import Web3 from 'web3/dist/web3.min.js'
 declare let window:any;
 
@@ -19,11 +20,12 @@ export class SupportComponent {
   error;
   success;
   messageSuccess;
-  constructor(private http: HttpClient, public analytics: AngularFireAnalytics) {
+  constructor(private http: HttpClient, public analytics: AngularFireAnalytics, public titleService: Title,) {
 
   }
   
   ngOnInit() {
+    this.titleService.setTitle("Catgirl Stats | Support")
     this.analytics.logEvent('go_to_support');
     this.getAccount()
   }

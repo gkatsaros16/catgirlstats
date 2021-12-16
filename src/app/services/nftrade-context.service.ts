@@ -194,40 +194,6 @@ export class nftadeContextService {
                 });
             });
         })
-
-        this.http.get("https://catgirlstats.dev/TofuNFT/GetTofuNFTSales").subscribe((x:any[]) => {
-            x.forEach(catgirl => {
-                this.apollo
-                    .watchQuery({
-                    query: GET_CATGIRL,
-                    variables: {
-                        "skip": 0,
-                        "orderDirection": "desc",
-                        "first": 1,
-                        "orderBy": "timestamp",
-                        "where": {
-                        "id": '0x' + parseInt(catgirl.tokenID).toString(16),
-                        "rarity_in": [
-                            0,
-                            1,
-                            2,
-                            3,
-                            4
-                        ]
-                        }
-                    }
-                    })
-                    .valueChanges.subscribe((result: any) => {
-                    if (result.data.catgirls[0]) {
-                        catgirl.last_Sell_At = moment(new Date(parseInt(catgirl.last_Sell_At) * 1000)).format("M/D/YYYY")
-                        catgirl.catgirlDetails = result.data.catgirls[0]
-                        this.recentSold$.next([...this.recentSold$.value, catgirl])
-                    } else {
-
-                    }
-                });
-            });
-        })
     }
 
     getRecentNFTListing(id:any) {

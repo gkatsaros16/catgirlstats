@@ -186,6 +186,9 @@ export class nftadeContextService {
                     })
                     .valueChanges.subscribe((result: any) => {
                     if (result.data.catgirls[0]) {
+                        if (!catgirl.last_Sell_At.includes('-')) {
+                            catgirl.last_Sell_At = moment(new Date(parseInt(catgirl.last_Sell_At) * 1000)).format("YYYY-MM-DD HH:mm:ss")
+                        }
                         catgirl.catgirlDetails = result.data.catgirls[0]
                         this.recentSold$.next([...this.recentSold$.value, catgirl])
                     } else {

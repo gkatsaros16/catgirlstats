@@ -48,6 +48,9 @@ export class SalesAnalysisComponent {
           x.map(x => {
             this.context.CATGIRLS.map(y => {
               if (y.id == (x.catgirlDetails.rarity + ':' + x.catgirlDetails.characterId)) {
+                if (x.catgirlDetails.rarity == 3) { 
+                  console.log('here')
+                }
                 this.adjustSale(x);
                 y.sales.push(x);
               }
@@ -231,6 +234,9 @@ export class SalesAnalysisComponent {
   caluculateAdjustedSale(bnbPrice, sell) {
     var usd = parseFloat(sell) * bnbPrice;
     var adjusted = usd / this.crypto.bnbPrice$.value;
+    if (!usd || !adjusted) {
+      console.log('here');
+    }
     return adjusted;
   }
 

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Title } from '@angular/platform-browser';
 import { Apollo, gql } from 'apollo-angular';
 import { interval, Subscription, timer } from 'rxjs';
@@ -28,13 +29,15 @@ export class HomeComponent {
   sub2: Subscription
   CATGIRLS
   loading = true;
+
   constructor(
     private apollo: Apollo,
     private context: CatgirlContextService,
     private nfTradeContext: nftadeContextService,
-    private titleService: Title
+    private titleService: Title,
+    public analytics: AngularFireAnalytics,
     ) {
-    this.CATGIRLS = this.context.CATGIRLS;
+      this.CATGIRLS = this.context.CATGIRLS;
   }
 
   ngOnInit() {
@@ -160,6 +163,11 @@ export class HomeComponent {
       default:
         break;
     }
+  }
+
+  goToKemo() {
+    this.analytics.logEvent('goToMimi')
+    window.open('https://kemonomimi.me/', "_blank");
   }
 
   ngOnDestroy() {

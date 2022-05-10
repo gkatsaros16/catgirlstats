@@ -1,4 +1,8 @@
 <div class="row">
+    <div class="d-flex justify-content-center mb-4">
+        <img style="height: 75px; width:850px;" (click)="goToKemo()" class="ad clickable">
+        <img style="height: 75px; width:240px;" (click)="goToKemo()" class="ad-sm clickable">
+    </div>
     <div class="d-flex justify-content-center mb-2">
         <button [disabled]="isDisable" class="btn btn-primary me-2" type="button" (click)="sortRecentlyListed()">Recently Listed</button>
         <button [disabled]="isDisable" class="btn btn-primary" type="button" (click)="sortLowestPriceAsc()">Price: Lowest to Highest</button>
@@ -28,8 +32,8 @@
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck8">Mae</label>
         </div>       
         <div class="mb-2 col-sm-12 btn-group d-flex justify-content-center" role="group">
-            <input [(ngModel)]="nfTradeCheck" [disabled]="isDisable" (click)="changeListing(1)" type="checkbox" class="btn-check" id="btncheck9" autocomplete="off">
-            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck9">NfTrade</label>
+            <!-- <input [(ngModel)]="nfTradeCheck" [disabled]="isDisable" (click)="changeListing(1)" type="checkbox" class="btn-check" id="btncheck9" autocomplete="off">
+            <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck9">NfTrade</label> -->
             <input [(ngModel)]="tofuNFTCheck" [disabled]="isDisable" selected type="checkbox" class="btn-check" (click)="changeListing(2)" id="btncheck10" autocomplete="off">
             <label style="max-width: 100px; min-width: 100px;" class="btn btn-outline-primary" for="btncheck10">TofuNFT</label>
         </div>   
@@ -42,7 +46,7 @@
 
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-center">
-            <span class="me-2">NfTrade: {{filterNfTradeCount}} \ 100</span>
+            <!-- <span class="me-2">NfTrade: {{filterNfTradeCount}} \ 100</span> -->
             <span>Tofu: {{filterTofuCount}} \ 1000</span>
         </div>
     </div>

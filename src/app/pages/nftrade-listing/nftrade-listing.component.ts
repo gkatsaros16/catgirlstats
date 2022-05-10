@@ -187,7 +187,7 @@ export class NFTradeListingComponent {
     this.maeCheck= false;
     this.nfTradeCheck = true;
     this.tofuNFTCheck = false;
-    this.listing = 1;
+    this.listing = 2;
     this.filter = [];
     this.nfTradeContext.showAllRecentListing();
   }
@@ -210,6 +210,11 @@ export class NFTradeListingComponent {
       this.nfTradeCheck = false;
     }
     this.listing = value;
+  }
+
+  goToKemo() {
+    this.analytics.logEvent('goToMimi')
+    window.open('https://kemonomimi.me/', "_blank");
   }
 
   ngOnDestroy() {

@@ -1,4 +1,10 @@
 <div class="row">
+    <div class="d-flex justify-content-center mb-4">
+        <img style="height: 75px; width:850px;" (click)="goToKemo()" class="ad clickable">
+        <img style="height: 75px; width:240px;" (click)="goToKemo()" class="ad-sm clickable">
+    </div>
+
+        
     <div *ngIf="selectedCatgirl" class="d-flex justify-content-center">
         <div *ngIf="selectedCatgirl.src">
             <img [src]="selectedCatgirl.src" class="img-fluid" class="catgirl">

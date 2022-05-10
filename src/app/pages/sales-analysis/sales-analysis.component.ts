@@ -43,13 +43,12 @@ export class SalesAnalysisComponent {
     this.titleService.setTitle("Catgirl Stats | Sales Analysis")
     this.nfTradeContext.recentSold$.subscribe(x => {
       this.progress = x.length
-      if (x.length == 1500) {
+      if (x.length == 1000) {
         if (!this.context.salesAnalysisSet$.value) {
           x.map(x => {
             this.context.CATGIRLS.map(y => {
               if (y.id == (x.catgirlDetails.rarity + ':' + x.catgirlDetails.characterId)) {
                 if (x.catgirlDetails.rarity == 3) { 
-                  console.log('here')
                 }
                 this.adjustSale(x);
                 y.sales.push(x);

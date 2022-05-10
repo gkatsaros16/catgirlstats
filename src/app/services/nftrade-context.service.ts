@@ -38,46 +38,47 @@ export class nftadeContextService {
         this.getRecentTofuListings();
         this.getRecentListings();
         this.getRecentSold();
+        this.http.get("https://catgirlstats.dev/bnb/SetBNBCurrentPrice").subscribe();
     }
 
     getRecentListings() {  
         this.recentListings$.next([]); 
         this.filterNfTradeCount$.next(0); 
-        this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeListing").subscribe((x:any[]) => {
-            x.forEach(catgirl => {
-                this.apollo
-                    .watchQuery({
-                    query: GET_CATGIRL,
-                    variables: {
-                        "skip": 0,
-                        "orderDirection": "desc",
-                        "first": 1,
-                        "orderBy": "timestamp",
-                        "where": {
-                        "id": '0x' + parseInt(catgirl.tokenID).toString(16),
-                        "rarity_in": [
-                            0,
-                            1,
-                            2,
-                            3,
-                            4
-                        ]
-                        }
-                    }
-                    })
-                    .valueChanges.subscribe((result: any) => {
-                    if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
-                        catgirl.show = true;
-                        catgirl.catgirlDetails = result.data.catgirls[0]
-                        catgirl.type = 1;
-                        this.filterNfTradeCount$.next(this.filterNfTradeCount$.value + 1)
-                        this.recentListings$.next([...this.recentListings$.value, catgirl])
-                    } else {
+        // this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeListing").subscribe((x:any[]) => {
+        //     x.forEach(catgirl => {
+        //         this.apollo
+        //             .watchQuery({
+        //             query: GET_CATGIRL,
+        //             variables: {
+        //                 "skip": 0,
+        //                 "orderDirection": "desc",
+        //                 "first": 1,
+        //                 "orderBy": "timestamp",
+        //                 "where": {
+        //                 "id": '0x' + parseInt(catgirl.tokenID).toString(16),
+        //                 "rarity_in": [
+        //                     0,
+        //                     1,
+        //                     2,
+        //                     3,
+        //                     4
+        //                 ]
+        //                 }
+        //             }
+        //             })
+        //             .valueChanges.subscribe((result: any) => {
+        //             if (result.data.catgirls[0] && catgirl.contractAddress == "0xe796f4b5253a4b3edb4bb3f054c03f147122bacd") {
+        //                 catgirl.show = true;
+        //                 catgirl.catgirlDetails = result.data.catgirls[0]
+        //                 catgirl.type = 1;
+        //                 this.filterNfTradeCount$.next(this.filterNfTradeCount$.value + 1)
+        //                 this.recentListings$.next([...this.recentListings$.value, catgirl])
+        //             } else {
 
-                    }
-                });
-            });
-        })
+        //             }
+        //         });
+        //     });
+        // })
     }
 
     getRecentTofuListings() {   
@@ -162,6 +163,11 @@ export class nftadeContextService {
     }
 
     getRecentSold() {
+
+        // this.http.get("https://api.nftrade.com/api/v1/tokens?contracts[]=d6989ada-8bc6-416c-87be-dc84de7710fb&chains[]=56&search=&sort=sold_desc&skip=75&limit=75").subscribe(x => console.log(x))
+
+
+        // this.http.get("https://localhost:5000/NFTrade/GetNFTradeSales500").subscribe((x:any[]) => {
         this.http.get("https://catgirlstats.dev/NFTrade/GetNFTradeSales500").subscribe((x:any[]) => {
             x.forEach(catgirl => {
                 this.apollo

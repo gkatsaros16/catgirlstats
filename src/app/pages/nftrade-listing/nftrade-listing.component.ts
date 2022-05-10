@@ -213,7 +213,7 @@ export class NFTradeListingComponent {
   }
 
   goToKemo() {
-    this.analytics.logEvent('goToMimi')
+    this.analytics.logEvent('go_to_mimi')
     window.open('https://kemonomimi.me/', "_blank");
   }
 
